@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   MapPin, 
   Clock, 
@@ -515,10 +516,13 @@ const Packages = () => {
 
         {/* View All CTA */}
         <div className="text-center">
-          <button className="px-10 py-4 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-all duration-300 shadow-xl hover-lift flex items-center gap-3 mx-auto">
+          <Link 
+            to="/packages"
+            className="inline-flex items-center gap-3 px-10 py-4 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-all duration-300 shadow-xl hover-lift"
+          >
             <span>View All Packages</span>
             <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

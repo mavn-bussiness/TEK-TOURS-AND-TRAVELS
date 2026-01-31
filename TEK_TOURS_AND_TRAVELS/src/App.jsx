@@ -1,25 +1,40 @@
 import React from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import TopBanner from './components/TopBanner';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Introduction from './components/Introduction';
 import Destinations from './components/Destinations';
 import Footer from './components/Footer';
-import { Package } from 'lucide-react';
 import Packages from './components/Packages';
+import AllDestinations from './pages/AllDestinations';
+import AllPackages from './pages/AllPackages';
+import DestinationDetail from './pages/DestinationDetail';
+import Booking from './pages/Booking';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <div className="App">
       <TopBanner />
       <Navbar />
-      <Hero />
-      <Introduction />
-      <Destinations/>
-      <Packages/>
-      <Footer/>
-      {/* More sections will be added here as we build them */}
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Hero />
+            <Introduction />
+            <Destinations />
+            <Packages />
+          </>
+        } />
+        <Route path="/destinations" element={<AllDestinations />} />
+        <Route path="/destination/:id" element={<DestinationDetail />} />
+        <Route path="/packages" element={<AllPackages />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }

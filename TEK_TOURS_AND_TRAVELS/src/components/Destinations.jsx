@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Info, MapPin, Clock, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Destinations = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -346,11 +347,15 @@ const Destinations = () => {
 
           {/* View All Button */}
           <div className="px-4 sm:px-6 mt-8">
-            <button className="w-full sm:w-auto px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
-              <span>View All Destinations</span>
-              <Play className="w-4 h-4 fill-white" />
-            </button>
+            <Link 
+              to="/destinations"
+              className="px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 group"
+            >
+              <span>View All</span>
+              <Play className="w-4 h-4 fill-white group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
+
         </div>
 
         <style jsx>{`
