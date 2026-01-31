@@ -7,10 +7,21 @@ const Destinations = () => {
   const scrollPositionsRef = useRef([0, 0, 0, 0]);
   const animationFrameRef = useRef(null);
   const lastTimeRef = useRef(Date.now());
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Organized destination data by column
   const destinationColumns = [
-    // Column 1 - Beach & Islands
     {
       destinations: [
         {
@@ -54,9 +65,8 @@ const Destinations = () => {
           description: 'Pristine beaches and granite rock formations'
         }
       ],
-      offset: 0 // No offset for first column
+      offset: 0
     },
-    // Column 2 - Mountains & Adventure
     {
       destinations: [
         {
@@ -100,9 +110,8 @@ const Destinations = () => {
           description: 'Dramatic peaks and mountain villages'
         }
       ],
-      offset: -150 // Displaced up by 150px
+      offset: -150
     },
-    // Column 3 - Cultural & Heritage
     {
       destinations: [
         {
@@ -146,9 +155,8 @@ const Destinations = () => {
           description: 'Pyramids, temples, and the Nile'
         }
       ],
-      offset: -75 // Displaced up by 75px
+      offset: -75
     },
-    // Column 4 - Safari & Wildlife
     {
       destinations: [
         {
@@ -192,12 +200,17 @@ const Destinations = () => {
           description: 'Unique wildlife and volcanic islands'
         }
       ],
-      offset: -225 // Displaced up by 225px
+      offset: -225
     }
   ];
 
-  // Smooth continuous scrolling with varying speeds
+  // Flatten for mobile horizontal scroll
+  const allDestinations = destinationColumns.flatMap(col => col.destinations);
+
+  // Smooth continuous scrolling (desktop only)
   useEffect(() => {
+    if (isMobile) return;
+
     const animate = () => {
       if (!isPaused) {
         const currentTime = Date.now();
@@ -234,8 +247,126 @@ const Destinations = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isPaused, destinationColumns.length]);
+  }, [isPaused, isMobile, destinationColumns.length]);
 
+  // Mobile View - Horizontal Scroll
+  if (isMobile) {
+    return (
+      <section 
+        id="destinations"
+        className="relative bg-[#0a0a0a] overflow-hidden py-16"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50 pointer-events-none z-10" />
+
+        <div className="relative z-10">
+          {/* Header */}
+          <div className="px-4 sm:px-6 mb-8">
+            <span 
+              className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-4"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              Explore The World
+            </span>
+            
+            <h2 
+              className="text-4xl sm:text-5xl text-white font-bold mb-4 leading-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Discover <br />Destinations
+            </h2>
+            
+            <p 
+              className="text-gray-400 text-base leading-relaxed max-w-lg"
+              style={{ fontFamily: "'Crimson Text', serif" }}
+            >
+              Handpicked destinations from pristine beaches to majestic mountains
+            </p>
+          </div>
+
+          {/* Horizontal Scrolling Cards */}
+          <div className="overflow-x-auto scrollbar-hide px-4 sm:px-6">
+            <div className="flex gap-4 pb-4">
+              {allDestinations.map((destination, index) => (
+                <div
+                  key={`${destination.id}-${index}`}
+                  className="flex-shrink-0 w-[280px] sm:w-[320px]"
+                >
+                  <div className="relative rounded-xl overflow-hidden bg-[#1a1a1a] shadow-2xl">
+                    <div className="relative aspect-[3/4]">
+                      <img
+                        src={destination.image}
+                        alt={destination.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                      
+                      <div className="absolute top-3 left-3 right-3">
+                        <span className="inline-block px-3 py-1 bg-amber-600/90 backdrop-blur-sm text-white text-xs font-semibold tracking-wide uppercase rounded-full">
+                          {destination.category}
+                        </span>
+                      </div>
+
+                      <div className="absolute bottom-0 left-0 right-0 p-4">
+                        <h4 className="text-white text-lg font-bold mb-1 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                          {destination.title}
+                        </h4>
+                        <div className="flex items-center gap-1.5 text-gray-300 text-sm mb-3">
+                          <MapPin className="w-3 h-3" />
+                          <span>{destination.location}</span>
+                        </div>
+
+                        <p className="text-white/80 text-sm mb-3 line-clamp-2" style={{ fontFamily: "'Crimson Text', serif" }}>
+                          {destination.description}
+                        </p>
+
+                        <div className="flex items-center justify-between text-white/70 text-xs mb-3">
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            <span>{destination.duration}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            <span>{destination.groupSize}</span>
+                          </div>
+                        </div>
+
+                        <button className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
+                          <Play className="w-4 h-4 fill-white" />
+                          View Tour
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* View All Button */}
+          <div className="px-4 sm:px-6 mt-8">
+            <button className="w-full sm:w-auto px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+              <span>View All Destinations</span>
+              <Play className="w-4 h-4 fill-white" />
+            </button>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
+      </section>
+    );
+  }
+
+  // Desktop View - Vertical Scrolling Columns
   return (
     <section 
       id="destinations"
@@ -248,7 +379,7 @@ const Destinations = () => {
 
       <div className="relative z-10 h-full flex">
         {/* Left Side - Hero Text */}
-        <div className="hidden lg:flex lg:w-2/5 xl:w-1/3 items-center justify-center p-12 xl:p-16">
+        <div className="lg:w-2/5 xl:w-1/3 flex items-center justify-center p-12 xl:p-16">
           <div className="max-w-xl">
             <span 
               className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-6"
@@ -276,7 +407,7 @@ const Destinations = () => {
               to majestic mountains, ancient cultures to thrilling safaris.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-4">
               <button className="px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 group">
                 <span>View All</span>
                 <Play className="w-4 h-4 fill-white group-hover:translate-x-1 transition-transform" />
@@ -304,27 +435,20 @@ const Destinations = () => {
         </div>
 
         {/* Right Side - Scrolling Columns */}
-        <div className="w-full lg:w-3/5 xl:w-2/3 relative">
-          <div className="lg:hidden absolute top-0 left-0 right-0 z-20 p-6 bg-gradient-to-b from-black/80 to-transparent">
-            <h2 className="text-3xl text-white font-bold mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Explore Destinations
-            </h2>
-            <p className="text-gray-300 text-sm">Discover amazing places</p>
-          </div>
-
-          <div className="h-full flex gap-3 md:gap-4 px-4 md:px-8 py-8 pt-24 lg:pt-8 overflow-x-auto scrollbar-hide">
+        <div className="lg:w-3/5 xl:w-2/3 relative">
+          <div className="h-full flex gap-4 px-8 py-8 overflow-x-auto scrollbar-hide">
             {destinationColumns.map((column, columnIndex) => (
               <div
                 key={columnIndex}
                 id={`scroll-column-${columnIndex}`}
-                className="flex-shrink-0 w-[160px] sm:w-[200px] md:w-[240px] lg:w-[260px] xl:w-[280px] h-full overflow-y-auto scrollbar-hide"
+                className="flex-shrink-0 w-[260px] xl:w-[280px] h-full overflow-y-auto scrollbar-hide"
                 style={{ 
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
                   transform: `translateY(${column.offset}px)`
                 }}
               >
-                <div className="flex flex-col gap-3 md:gap-4">
+                <div className="flex flex-col gap-4">
                   {[...column.destinations, ...column.destinations].map((destination, index) => (
                     <div
                       key={`${destination.id}-${index}`}
@@ -346,7 +470,7 @@ const Destinations = () => {
                           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                           
                           <div className="absolute top-3 left-3 right-3">
-                            <span className="inline-block px-3 py-1 bg-amber-600/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-semibold tracking-wide uppercase rounded-full">
+                            <span className="inline-block px-3 py-1 bg-amber-600/90 backdrop-blur-sm text-white text-xs font-semibold tracking-wide uppercase rounded-full">
                               {destination.category}
                             </span>
                           </div>
@@ -354,22 +478,22 @@ const Destinations = () => {
                           <div className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 flex flex-col items-center justify-center gap-3 ${
                             hoveredCard === `${columnIndex}-${index}` ? 'opacity-100' : 'opacity-0'
                           }`}>
-                            <p className="text-white/90 text-xs md:text-sm text-center px-6 mb-2" style={{ fontFamily: "'Crimson Text', serif" }}>
+                            <p className="text-white/90 text-sm text-center px-6 mb-2" style={{ fontFamily: "'Crimson Text', serif" }}>
                               {destination.description}
                             </p>
 
                             <div className="flex flex-col gap-2 w-full px-6">
-                              <button className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
-                                <Play className="w-3 h-3 md:w-4 md:h-4 fill-white" />
+                              <button className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
+                                <Play className="w-4 h-4 fill-white" />
                                 View Tour
                               </button>
-                              <button className="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 border border-white/30">
-                                <Info className="w-3 h-3 md:w-4 md:h-4" />
+                              <button className="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 border border-white/30">
+                                <Info className="w-4 h-4" />
                                 Details
                               </button>
                             </div>
 
-                            <div className="flex items-center justify-center gap-4 text-white/70 text-[10px] md:text-xs mt-2">
+                            <div className="flex items-center justify-center gap-4 text-white/70 text-xs mt-2">
                               <div className="flex items-center gap-1">
                                 <Clock className="w-3 h-3" />
                                 <span>{destination.duration}</span>
@@ -381,8 +505,8 @@ const Destinations = () => {
                             </div>
                           </div>
 
-                          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                            <h4 className="text-white text-sm md:text-base lg:text-lg font-bold mb-1 line-clamp-2 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                          <div className="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 className="text-white text-base lg:text-lg font-bold mb-1 line-clamp-2 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                               {destination.title}
                             </h4>
                             <div className="flex items-center gap-1.5 text-gray-300 text-xs">
