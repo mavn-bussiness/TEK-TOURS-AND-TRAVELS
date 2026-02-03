@@ -1,546 +1,256 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Info, MapPin, Clock, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { MapPin, Clock, Users } from 'lucide-react';
 
 const Destinations = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [columnPausedStates, setColumnPausedStates] = useState([false, false, false, false]);
+  const [columnPausedStates, setColumnPausedStates] = useState([false, false, false]);
   const [isMobile, setIsMobile] = useState(false);
-  
-  const scrollPositionsRef = useRef([0, 0, 0, 0]);
+
+  const scrollPositionsRef = useRef([0, 0, 0]);
   const animationFrameRef = useRef(null);
   const lastTimeRef = useRef(Date.now());
 
-  // Check if mobile
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Organized destination data by column
   const destinationColumns = [
     {
       destinations: [
-        {
-          id: 'bwindi-impenetrable',
-          image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&q=80',
-          title: 'Bwindi Impenetrable Forest',
-          location: 'Southwestern Uganda',
-          category: 'Gorilla Trekking',
-          duration: '4 Days',
-          groupSize: '4-8',
-          description: 'Unforgettable mountain gorilla trekking and lush rainforest adventures'
-        },
-        {
-          id: 'murchison-falls',
-          image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80',
-          title: 'Murchison Falls NP',
-          location: 'Northwestern Uganda',
-          category: 'Safari & Waterfalls',
-          duration: '3 Days',
-          groupSize: '6-12',
-          description: 'Thundering Nile waterfall and classic African safari experiences'
-        },
-        {
-          id: 'queen-elizabeth',
-          image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
-          title: 'Queen Elizabeth NP',
-          location: 'Western Uganda',
-          category: 'Wildlife Safari',
-          duration: '3 Days',
-          groupSize: '6-14',
-          description: 'Diverse ecosystems, boat cruises, and iconic wildlife sightings'
-        },
-        {
-          id: 'lake-bunyonyi',
-          image: 'https://images.unsplash.com/photo-1611416517780-eff3a2f57b89?w=600&q=80',
-          title: 'Lake Bunyonyi',
-          location: 'Southwestern Uganda',
-          category: 'Scenic Lake',
-          duration: '2 Days',
-          groupSize: '2-6',
-          description: 'Serene lake with island hopping, swimming and beautiful views'
-        }
+        { id: 'bwindi', image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&q=80', title: 'Bwindi Impenetrable Forest', location: 'Southwestern Uganda', category: 'Gorilla Trekking', duration: '4 Days', groupSize: '4-8', description: 'Unforgettable mountain gorilla trekking and lush rainforest adventures' },
+        { id: 'murchison', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80', title: 'Murchison Falls NP', location: 'Northwestern Uganda', category: 'Safari & Waterfalls', duration: '3 Days', groupSize: '6-12', description: 'Thundering Nile waterfall and classic African safari experiences' },
+        { id: 'queen-elizabeth', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80', title: 'Queen Elizabeth NP', location: 'Western Uganda', category: 'Wildlife Safari', duration: '3 Days', groupSize: '6-14', description: 'Diverse ecosystems, boat cruises, and iconic wildlife sightings' },
+        { id: 'lake-bunyonyi', image: 'https://images.unsplash.com/photo-1611416517780-eff3a2f57b89?w=600&q=80', title: 'Lake Bunyonyi', location: 'Southwestern Uganda', category: 'Scenic Lake', duration: '2 Days', groupSize: '2-6', description: 'Serene lake with island hopping, swimming and beautiful views' },
       ],
       offset: 0
     },
     {
       destinations: [
-        {
-          id: 'rwenzori-mountains',
-          image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
-          title: 'Rwenzori Mountains',
-          location: 'Western Uganda',
-          category: 'Mountain Trek',
-          duration: '7 Days',
-          groupSize: '6-10',
-          description: 'Hike the "Mountains of the Moon" with glaciers and waterfalls'
-        },
-        {
-          id: 'jinja-nile',
-          image: 'https://images.unsplash.com/photo-1624714463892-c0e3fe9b1eb1?w=600&q=80',
-          title: 'Jinja & Source of Nile',
-          location: 'Eastern Uganda',
-          category: 'Adventure & River',
-          duration: '2 Days',
-          groupSize: '4-8',
-          description: 'Adventure capital with white-water rafting and Nile views'
-        },
-        {
-          id: 'kibale-forest',
-          image: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80',
-          title: 'Kibale Forest',
-          location: 'Western Uganda',
-          category: 'Chimpanzee Safari',
-          duration: '3 Days',
-          groupSize: '6-10',
-          description: 'Chimpanzee tracking and rich primate biodiversity'
-        },
-        {
-          id: 'lake-victoria',
-          image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80',
-          title: 'Lake Victoria',
-          location: 'Central Uganda',
-          category: 'Lakeside Leisure',
-          duration: '2 Days',
-          groupSize: '2-6',
-          description: 'Africa\'s largest lake with beaches, boat tours and birdlife'
-        }
+        { id: 'rwenzori', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80', title: 'Rwenzori Mountains', location: 'Western Uganda', category: 'Mountain Trek', duration: '7 Days', groupSize: '6-10', description: 'Hike the "Mountains of the Moon" with glaciers and waterfalls' },
+        { id: 'jinja', image: 'https://images.unsplash.com/photo-1624714463892-c0e3fe9b1eb1?w=600&q=80', title: 'Jinja & Source of Nile', location: 'Eastern Uganda', category: 'Adventure & River', duration: '2 Days', groupSize: '4-8', description: 'Adventure capital with white-water rafting and Nile views' },
+        { id: 'kibale', image: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80', title: 'Kibale Forest', location: 'Western Uganda', category: 'Chimpanzee Safari', duration: '3 Days', groupSize: '6-10', description: 'Chimpanzee tracking and rich primate biodiversity' },
+        { id: 'lake-victoria', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80', title: 'Lake Victoria', location: 'Central Uganda', category: 'Lakeside Leisure', duration: '2 Days', groupSize: '2-6', description: "Africa's largest lake with beaches, boat tours and birdlife" },
       ],
-      offset: -150
+      offset: -160
     },
     {
       destinations: [
-        {
-          id: 'entebbe-gardens',
-          image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?w=600&q=80',
-          title: 'Entebbe Botanical Gardens',
-          location: 'Entebbe, Uganda',
-          category: 'Nature & Birdwatching',
-          duration: '1 Day',
-          groupSize: '4-8',
-          description: 'Explore tropical plant life, birds and lakeside scenery'
-        },
-        {
-          id: 'lake-mburo',
-          image: 'https://images.pexels.com/photos/33045/animal-zebra-lake-blog-mburo.jpg?w=600&q=80',
-          title: 'Lake Mburo NP',
-          location: 'Western Uganda',
-          category: 'Safari Getaway',
-          duration: '2 Days',
-          groupSize: '4-8',
-          description: 'Easy safari with zebras, antelope, and birdlife'
-        },
-        {
-          id: 'tororo-rock',
-          image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',
-          title: 'Tororo Rock',
-          location: 'Eastern Uganda',
-          category: 'Hiking & Views',
-          duration: '1 Day',
-          groupSize: '6-12',
-          description: 'Climb the iconic volcanic rock for panoramic views'
-        },
-        {
-          id: 'uganda-mosque',
-          image: 'https://images.pexels.com/photos/5024619/pexels-photo-5024619.jpeg?w=600&q=80',
-          title: 'Uganda National Mosque',
-          location: 'Kampala, Uganda',
-          category: 'Cultural Landmark',
-          duration: '1 Day',
-          groupSize: '1-4',
-          description: 'Visit East Africa\'s largest mosque and city views'
-        }
+        { id: 'kidepo', image: 'https://images.unsplash.com/photo-1484406566174-9da000fda645?w=600&q=80', title: 'Kidepo Valley NP', location: 'Northern Uganda', category: 'Remote Safari', duration: '4 Days', groupSize: '6-10', description: 'Wild, rugged landscapes and classic savannah wildlife' },
+        { id: 'entebbe', image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?w=600&q=80', title: 'Entebbe Botanical Gardens', location: 'Entebbe, Uganda', category: 'Nature & Birdwatching', duration: '1 Day', groupSize: '4-8', description: 'Explore tropical plant life, birds and lakeside scenery' },
+        { id: 'lake-mburo', image: 'https://images.pexels.com/photos/33045/animal-zebra-lake-blog-mburo.jpg?w=600&q=80', title: 'Lake Mburo NP', location: 'Western Uganda', category: 'Safari Getaway', duration: '2 Days', groupSize: '4-8', description: 'Easy safari with zebras, antelope, and birdlife' },
+        { id: 'kampala', image: 'https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=600&q=80', title: 'Kampala City', location: 'Central Uganda', category: 'Urban & Culture', duration: '2 Days', groupSize: '1-6', description: 'Experience lively markets, museums, and nightlife' },
       ],
-      offset: -75
-    },
-    {
-      destinations: [
-        {
-          id: 'kidepo-valley',
-          image: 'https://images.unsplash.com/photo-1484406566174-9da000fda645?w=600&q=80',
-          title: 'Kidepo Valley NP',
-          location: 'Northern Uganda',
-          category: 'Remote Safari',
-          duration: '4 Days',
-          groupSize: '6-10',
-          description: 'Wild, rugged landscapes and classic savannah wildlife'
-        },
-        {
-          id: 'semuliki',
-          image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80',
-          title: 'Semuliki National Park',
-          location: 'Western Uganda',
-          category: 'Forest & Hot Springs',
-          duration: '3 Days',
-          groupSize: '4-8',
-          description: 'Explore hot springs and dense rainforest'
-        },
-        {
-          id: 'zziwa-rhino',
-          image: 'https://images.unsplash.com/photo-1568454537842-d933259bb258?w=600&q=80',
-          title: 'Ziwa Rhino Sanctuary',
-          location: 'Central Uganda',
-          category: 'Wildlife Sanctuary',
-          duration: '1 Day',
-          groupSize: '4-10',
-          description: 'Track rhinos on foot in Uganda\'s only rhino sanctuary'
-        },
-        {
-          id: 'kampala-city',
-          image: 'https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=600&q=80',
-          title: 'Kampala City',
-          location: 'Central Uganda',
-          category: 'Urban & Culture',
-          duration: '2 Days',
-          groupSize: '1-6',
-          description: 'Experience lively markets, museums, and nightlife'
-        }
-      ],
-      offset: -225
+      offset: -80
     }
   ];
 
-  // Smooth continuous scrolling with individual column pause control
+  // Uneven blur config per column
+  const fadeConfig = [
+    { topGradH: 130, topBlurH: 90,  topBlur: 7,  botGradH: 80,  botBlurH: 50,  botBlur: 4  },
+    { topGradH: 60,  topBlurH: 40,  topBlur: 3,  botGradH: 150, botBlurH: 100, botBlur: 9  },
+    { topGradH: 100, topBlurH: 65,  topBlur: 5,  botGradH: 100, botBlurH: 65,  botBlur: 5  },
+  ];
+
+  // Auto-scroll
   useEffect(() => {
     if (isMobile) return;
-
     const animate = () => {
-      const currentTime = Date.now();
-      const deltaTime = (currentTime - lastTimeRef.current) / 16.67;
-      lastTimeRef.current = currentTime;
-
-      destinationColumns.forEach((column, columnIndex) => {
-        // Skip if this column is paused
-        if (columnPausedStates[columnIndex]) return;
-
-        const baseSpeed = 0.3;
-        const speedVariation = columnIndex * 0.08;
-        const speed = (baseSpeed + speedVariation) * deltaTime;
-        
-        scrollPositionsRef.current[columnIndex] += speed;
-
-        const container = document.getElementById(`scroll-column-${columnIndex}`);
-        if (container) {
-          const maxScroll = container.scrollHeight / 2;
-          
-          if (scrollPositionsRef.current[columnIndex] >= maxScroll) {
-            scrollPositionsRef.current[columnIndex] = 0;
-          }
-          
-          container.scrollTop = scrollPositionsRef.current[columnIndex];
+      const now = Date.now();
+      const dt = (now - lastTimeRef.current) / 16.67;
+      lastTimeRef.current = now;
+      destinationColumns.forEach((_, i) => {
+        if (columnPausedStates[i]) return;
+        scrollPositionsRef.current[i] += (0.35 + i * 0.1) * dt;
+        const el = document.getElementById(`scroll-col-${i}`);
+        if (el) {
+          const max = el.scrollHeight / 2;
+          if (scrollPositionsRef.current[i] >= max) scrollPositionsRef.current[i] = 0;
+          el.scrollTop = scrollPositionsRef.current[i];
         }
       });
-      
       animationFrameRef.current = requestAnimationFrame(animate);
     };
-
     animationFrameRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameRef.current);
+  }, [isMobile, columnPausedStates]);
 
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [isMobile, destinationColumns.length, columnPausedStates]);
+  const pause = (i, v) => setColumnPausedStates(p => { const n = [...p]; n[i] = v; return n; });
 
-  // Function to pause/unpause individual columns
-  const toggleColumnPause = (columnIndex, pause) => {
-    setColumnPausedStates(prev => {
-      const newStates = [...prev];
-      newStates[columnIndex] = pause;
-      return newStates;
-    });
-  };
-
-  // Mobile View - Horizontal Scroll
+  // ── MOBILE ──
   if (isMobile) {
-    const allDestinations = destinationColumns.flatMap(col => col.destinations);
-    
+    const all = destinationColumns.flatMap(c => c.destinations);
     return (
-      <section 
-        id="destinations"
-        className="relative bg-[#0a0a0a] overflow-hidden py-16"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50 pointer-events-none z-10" />
-
-        <div className="relative z-10">
-          {/* Header */}
-          <div className="px-4 sm:px-6 mb-8">
-            <span 
-              className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Explore Uganda
-            </span>
-            
-            <h2 
-              className="text-4xl sm:text-5xl text-white font-bold mb-4 leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Discover <br />Destinations
-            </h2>
-            
-            <p 
-              className="text-gray-400 text-base leading-relaxed max-w-lg"
-              style={{ fontFamily: "'Crimson Text', serif" }}
-            >
-              Handpicked destinations from pristine beaches to majestic mountains
-            </p>
-          </div>
-
-          {/* Horizontal Scrolling Cards */}
-          <div className="overflow-x-auto scrollbar-hide px-4 sm:px-6">
-            <div className="flex gap-4 pb-4">
-              {allDestinations.map((destination, index) => (
-                <div
-                  key={`${destination.id}-${index}`}
-                  className="flex-shrink-0 w-[280px] sm:w-[320px]"
-                >
-                  <div className="relative rounded-xl overflow-hidden bg-[#1a1a1a] shadow-2xl">
-                    <div className="relative aspect-[3/4]">
-                      <img
-                        src={destination.image}
-                        alt={destination.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-                      
-                      <div className="absolute top-3 left-3 right-3">
-                        <span className="inline-block px-3 py-1 bg-amber-600/90 backdrop-blur-sm text-white text-xs font-semibold tracking-wide uppercase rounded-full">
-                          {destination.category}
-                        </span>
-                      </div>
-
-                      <div className="absolute bottom-0 left-0 right-0 p-4">
-                        <h4 className="text-white text-lg font-bold mb-1 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-                          {destination.title}
-                        </h4>
-                        <div className="flex items-center gap-1.5 text-gray-300 text-sm mb-3">
-                          <MapPin className="w-3 h-3" />
-                          <span>{destination.location}</span>
-                        </div>
-
-                        <p className="text-white/80 text-sm mb-3 line-clamp-2" style={{ fontFamily: "'Crimson Text', serif" }}>
-                          {destination.description}
-                        </p>
-
-                        <div className="flex items-center justify-between text-white/70 text-xs">
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            <span>{destination.duration}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Users className="w-3 h-3" />
-                            <span>{destination.groupSize}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      <section id="destinations" className="relative bg-[#0f0f1a] overflow-hidden py-16">
+        <div className="px-4 sm:px-6 mb-8">
+          <span className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>Explore Uganda</span>
+          <h2 className="text-4xl sm:text-5xl text-white font-bold mb-4 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>Discover <br />Destinations</h2>
+          <p className="text-gray-400 text-base leading-relaxed max-w-lg" style={{ fontFamily: "'Crimson Text', serif" }}>Handpicked destinations from pristine beaches to majestic mountains</p>
         </div>
-
-        <style jsx>{`
-          .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-          }
-          .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-        `}</style>
-      </section>
-    );
-  }
-
-  // Desktop View - Vertical Scrolling Columns
-  return (
-    <section 
-      id="destinations"
-      className="relative bg-[#0a0a0a] overflow-hidden min-h-screen"
-    >
-      {/* Gradient Glow Effects like the image */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-gradient-to-b from-amber-600/10 via-transparent to-transparent blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-1/3 h-1/2 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent blur-3xl"></div>
-        <div className="absolute top-1/4 left-0 w-1/3 h-1/2 bg-gradient-to-r from-purple-600/10 via-transparent to-transparent blur-3xl"></div>
-        <div className="absolute top-3/4 right-0 w-1/4 h-1/3 bg-gradient-to-l from-cyan-600/10 via-transparent to-transparent blur-3xl"></div>
-      </div>
-      
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 pointer-events-none z-10" />
-
-      <div className="relative z-10 h-full flex flex-col lg:flex-row min-h-screen">
-        {/* Left Side - Hero Text */}
-        <div className="lg:w-2/5 xl:w-1/3 flex items-center justify-center p-8 xl:p-12">
-          <div className="max-w-xl">
-            <span 
-              className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-6"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Explore Uganda
-            </span>
-            
-            <h2 
-              className="text-5xl xl:text-6xl text-white font-bold mb-6 leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Destinations,
-              <br />
-              tours and
-              <br />
-              more.
-            </h2>
-            
-            <p 
-              className="text-gray-400 text-lg mb-8 leading-relaxed"
-              style={{ fontFamily: "'Crimson Text', serif" }}
-            >
-              Discover handpicked destinations around the world. From pristine beaches 
-              to majestic mountains, ancient cultures to thrilling safaris.
-            </p>
-            
-            <div className="flex flex-col gap-4">
-              <button className="px-8 py-4 bg-transparent hover:bg-white/10 text-white font-semibold rounded-lg border-2 border-white/30 hover:border-white/50 transition-all duration-300 relative group overflow-hidden">
-                <span className="relative z-10">Contact Us</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-600/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </button>
-            </div>
-
-            <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-3 gap-6">
-              <div>
-                <div className="text-3xl font-bold text-amber-400 mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>150+</div>
-                <div className="text-xs text-gray-500 uppercase tracking-wide">Destinations</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-amber-400 mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>50K+</div>
-                <div className="text-xs text-gray-500 uppercase tracking-wide">Travelers</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-amber-400 mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>500+</div>
-                <div className="text-xs text-gray-500 uppercase tracking-wide">Tours</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side - Scrolling Columns */}
-        <div className="lg:w-3/5 xl:w-2/3 relative">
-          <div className="h-full flex gap-3 px-4 py-8 overflow-x-auto scrollbar-hide">
-            {destinationColumns.map((column, columnIndex) => (
-              <div
-                key={columnIndex}
-                className="relative flex-shrink-0"
-                onMouseEnter={() => toggleColumnPause(columnIndex, true)}
-                onMouseLeave={() => toggleColumnPause(columnIndex, false)}
-              >
-                <div
-                  id={`scroll-column-${columnIndex}`}
-                  className="w-[200px] h-[80vh] overflow-y-auto scrollbar-hide"
-                  style={{ 
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                    transform: `translateY(${column.offset}px)`
-                  }}
-                >
-                  <div className="flex flex-col gap-3">
-                    {[...column.destinations, ...column.destinations].map((destination, index) => {
-                      const cardKey = `${columnIndex}-${index}`;
-                      const isHovered = hoveredCard === cardKey;
-                      
-                      return (
-                        <div
-                          key={cardKey}
-                          onMouseEnter={() => setHoveredCard(cardKey)}
-                          onMouseLeave={() => setHoveredCard(null)}
-                          className={`relative group cursor-pointer transition-all duration-300 ${
-                            isHovered ? 'scale-105 z-20' : 'scale-100'
-                          }`}
-                        >
-                          {/* Glow effect wrapper */}
-                          <div className={`relative rounded-xl overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 ${
-                            isHovered ? 'shadow-[0_0_30px_rgba(245,158,11,0.4)] ring-1 ring-amber-500/60' : 'shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
-                          }`}>
-                            {/* Glow background */}
-                            <div className={`absolute -inset-1 bg-gradient-to-r from-amber-500/30 via-purple-500/10 to-blue-500/30 rounded-xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 ${
-                              isHovered ? 'opacity-70' : ''
-                            }`}></div>
-                            
-                            <div className="relative aspect-[3/4] overflow-hidden bg-[#1a1a1a] rounded-xl">
-                              <img
-                                src={destination.image}
-                                alt={destination.title}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                loading="lazy"
-                              />
-                              
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                              
-                              <div className="absolute top-2 left-2 right-2">
-                                <span className="inline-block px-2 py-1 bg-amber-600/90 backdrop-blur-sm text-white text-xs font-semibold tracking-wide uppercase rounded-full">
-                                  {destination.category}
-                                </span>
-                              </div>
-
-                              <div className={`absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300 flex flex-col items-center justify-center gap-2 ${
-                                isHovered ? 'opacity-100' : 'opacity-0'
-                              }`}>
-                                <p className="text-white/90 text-xs text-center px-3 mb-2" style={{ fontFamily: "'Crimson Text', serif" }}>
-                                  {destination.description}
-                                </p>
-
-                                <div className="flex items-center justify-center gap-3 text-white/70 text-xs mt-1">
-                                  <div className="flex items-center gap-1">
-                                    <Clock className="w-3 h-3" />
-                                    <span>{destination.duration}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <Users className="w-3 h-3" />
-                                    <span>{destination.groupSize}</span>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="absolute bottom-0 left-0 right-0 p-3">
-                                <h4 className="text-white text-sm font-bold mb-1 line-clamp-2 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-                                  {destination.title}
-                                </h4>
-                                <div className="flex items-center gap-1 text-gray-300 text-xs">
-                                  <MapPin className="w-3 h-3" />
-                                  <span className="line-clamp-1">{destination.location}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+        <div className="overflow-x-auto scrollbar-hide px-4 sm:px-6">
+          <div className="flex gap-3 pb-4">
+            {all.map((d, i) => (
+              <div key={`${d.id}-${i}`} className="flex-shrink-0" style={{ width: 180 }}>
+                <div className="relative rounded-lg overflow-hidden bg-[#1a1a1a] shadow-2xl" style={{ aspectRatio: '2/3' }}>
+                  <img src={d.image} alt={d.title} className="w-full h-full object-cover" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                  <div className="absolute top-2 left-2"><span className="inline-block px-2 py-0.5 bg-amber-600/90 text-white text-[10px] font-semibold tracking-wide uppercase rounded-full">{d.category}</span></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                    <h4 className="text-white text-[13px] font-bold mb-0.5 leading-tight line-clamp-2" style={{ fontFamily: "'Playfair Display', serif" }}>{d.title}</h4>
+                    <div className="flex items-center gap-1 text-gray-400 text-[11px]"><MapPin className="w-2.5 h-2.5" /><span>{d.location}</span></div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
+    );
+  }
+
+  // ── DESKTOP ──
+  const BG = '#0f0f1a';
+
+  return (
+    <section id="destinations" className="relative overflow-hidden min-h-screen flex" style={{ background: BG }}>
+
+      {/* ── LEFT half: scrolling poster columns ── */}
+      <div className="relative flex-shrink-0" style={{ width: '50%' }}>
+        <div className="flex h-screen">
+          {destinationColumns.map((column, ci) => (
+            <div
+              key={ci}
+              className="relative"
+              style={{ width: 178, marginLeft: ci === 0 ? 20 : 10 }}
+              onMouseEnter={() => pause(ci, true)}
+              onMouseLeave={() => pause(ci, false)}
+            >
+              {/* scrollable gutter */}
+              <div
+                id={`scroll-col-${ci}`}
+                className="scrollbar-hide overflow-y-auto"
+                style={{ height: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                <div className="flex flex-col gap-3 py-8" style={{ transform: `translateY(${column.offset}px)` }}>
+                  {[...column.destinations, ...column.destinations].map((d, idx) => {
+                    const key = `${ci}-${idx}`;
+                    const hov = hoveredCard === key;
+                    return (
+                      <div
+                        key={key}
+                        onMouseEnter={() => setHoveredCard(key)}
+                        onMouseLeave={() => setHoveredCard(null)}
+                        className="relative cursor-pointer"
+                        style={{ transition: 'transform 0.3s ease', transform: hov ? 'scale(1.04)' : 'scale(1)', zIndex: hov ? 20 : 1 }}
+                      >
+                        {/* ambient glow */}
+                        <div className="absolute -inset-1 rounded-lg blur-xl transition-opacity duration-500" style={{ background: 'linear-gradient(135deg,rgba(245,158,11,0.28),rgba(139,92,246,0.08),rgba(59,130,246,0.18))', opacity: hov ? 0.55 : 0 }} />
+
+                        {/* poster card */}
+                        <div
+                          className="relative rounded-lg overflow-hidden"
+                          style={{
+                            aspectRatio: '2 / 3',
+                            background: '#111',
+                            boxShadow: hov ? '0 0 22px rgba(245,158,11,0.38),0 4px 14px rgba(0,0,0,0.6)' : '0 3px 14px rgba(0,0,0,0.5)',
+                            transition: 'box-shadow 0.3s ease',
+                            border: hov ? '1px solid rgba(245,158,11,0.4)' : '1px solid transparent',
+                          }}
+                        >
+                          <img
+                            src={d.image} alt={d.title}
+                            className="w-full h-full object-cover"
+                            style={{ transition: 'transform 0.7s ease', transform: hov ? 'scale(1.07)' : 'scale(1)' }}
+                            loading="lazy"
+                          />
+                          {/* gradient scrim */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+
+                          {/* category */}
+                          <div className="absolute top-2 left-2">
+                            <span className="inline-block px-2 py-0.5 bg-amber-600/85 backdrop-blur-sm text-white text-[10px] font-semibold tracking-wide uppercase rounded-full">{d.category}</span>
+                          </div>
+
+                          {/* hover detail */}
+                          <div
+                            className="absolute inset-0 flex flex-col items-center justify-center px-3"
+                            style={{ background: 'rgba(0,0,0,0.84)', backdropFilter: 'blur(3px)', opacity: hov ? 1 : 0, transition: 'opacity 0.28s ease' }}
+                          >
+                            <p className="text-white/82 text-[11px] text-center leading-relaxed mb-2" style={{ fontFamily: "'Crimson Text', serif" }}>{d.description}</p>
+                            <div className="flex gap-3 text-white/50 text-[10px]">
+                              <div className="flex items-center gap-1"><Clock className="w-2.5 h-2.5" /><span>{d.duration}</span></div>
+                              <div className="flex items-center gap-1"><Users className="w-2.5 h-2.5" /><span>{d.groupSize}</span></div>
+                            </div>
+                          </div>
+
+                          {/* title always visible */}
+                          <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                            <h4 className="text-white text-[13px] font-bold leading-tight line-clamp-2" style={{ fontFamily: "'Playfair Display', serif" }}>{d.title}</h4>
+                            <div className="flex items-center gap-1 text-gray-400 text-[11px] mt-0.5"><MapPin className="w-2.5 h-2.5" /><span className="line-clamp-1">{d.location}</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* ── TOP fade ── */}
+              <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].topGradH, zIndex: 10, background: `linear-gradient(to bottom, ${BG} 0%, rgba(15,15,26,0.75) 45%, rgba(15,15,26,0) 100%)` }} />
+              <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].topBlurH, zIndex: 11, WebkitBackdropFilter: `blur(${fadeConfig[ci].topBlur}px)`, backdropFilter: `blur(${fadeConfig[ci].topBlur}px)`, maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)' }} />
+
+              {/* ── BOTTOM fade ── */}
+              <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].botGradH, zIndex: 10, background: `linear-gradient(to top, ${BG} 0%, rgba(15,15,26,0.75) 45%, rgba(15,15,26,0) 100%)` }} />
+              <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].botBlurH, zIndex: 11, WebkitBackdropFilter: `blur(${fadeConfig[ci].botBlur}px)`, backdropFilter: `blur(${fadeConfig[ci].botBlur}px)`, maskImage: 'linear-gradient(to top, black 0%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 100%)' }} />
+            </div>
+          ))}
+        </div>
+
+        {/* RIGHT-EDGE fade — bleeds columns into the text side */}
+        <div
+          className="absolute top-0 right-0 bottom-0 pointer-events-none"
+          style={{ width: 180, zIndex: 30, background: `linear-gradient(to right, transparent 0%, rgba(15,15,26,0.55) 35%, ${BG} 100%)` }}
+        />
       </div>
 
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+      {/* ── RIGHT half: hero copy ── */}
+      <div className="flex-1 flex items-center px-10 xl:px-16 2xl:px-24">
+        <div className="max-w-lg">
+          <span className="inline-block text-[11px] tracking-widest uppercase text-gray-500 mb-5 font-medium" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            SCROLL
+          </span>
+
+          <h2 className="text-5xl xl:text-6xl text-white font-bold leading-[1.08] mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+            Unlimited<br />
+            destinations,<br />
+            <span style={{ color: '#c9e89d' }}>tours and<br />more.</span>
+          </h2>
+
+          <p className="text-gray-500 text-base leading-relaxed mb-8" style={{ fontFamily: "'Crimson Text', serif" }}>
+            Discover handpicked destinations around the world. From pristine beaches to majestic mountains, ancient cultures to thrilling safaris.
+          </p>
+
+          <button className="px-7 py-3 bg-transparent hover:bg-white/6 text-white text-sm font-semibold rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300">
+            Contact Us
+          </button>
+
+          {/* stats */}
+          <div className="mt-14 pt-5 border-t border-white/8 flex gap-10">
+            {[['150+', 'Destinations'], ['50K+', 'Travelers'], ['500+', 'Tours']].map(([n, l]) => (
+              <div key={l}>
+                <div className="text-xl font-bold text-amber-400 mb-0.5" style={{ fontFamily: "'Playfair Display', serif" }}>{n}</div>
+                <div className="text-[10px] text-gray-600 uppercase tracking-widest">{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </section>
   );
