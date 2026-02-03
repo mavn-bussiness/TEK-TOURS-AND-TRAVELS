@@ -7,31 +7,84 @@ const Hero = () => {
 
   const slides = [
     {
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80',
-      title: 'Discover Mountain Escapes',
-      subtitle: 'Breathtaking peaks await your journey',
-      cta: 'Explore Mountains'
+      image: 'https://media.istockphoto.com/id/2234874849/photo/a-wild-and-endangered-gorilla-in-the-bush.webp?s=1024x1024&w=is&k=20&c=e86pB22UY9xN88gprJrZm0qiN527vSltl-4-papeYeQ=',
+      title: 'Mountain Gorilla Trekking',
+      subtitle: 'Experience Uganda\'s most iconic wildlife encounter',
+      cta: 'Book Gorilla Trek'
     },
     {
-      image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&q=80',
-      title: 'Beach Paradise Retreats',
-      subtitle: 'Unwind on pristine tropical shores',
-      cta: 'View Beach Tours'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80',
-      title: 'Cultural Expeditions',
-      subtitle: 'Immerse yourself in ancient traditions',
-      cta: 'Cultural Tours'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80',
-      title: 'Safari Adventures',
-      subtitle: 'Witness wildlife in their natural habitat',
+      image: 'https://images.unsplash.com/photo-1535082623926-b39352a03fb7?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWZyaWNhbiUyMHNhZmFyaXxlbnwwfHwwfHx8MA%3D%3D',
+      title: 'Unforgettable Safari Adventures',
+      subtitle: 'Create memories that last a lifetime in the wild',
       cta: 'Safari Packages'
-    }
-  ];
-
+    },
+    {
+      image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/ab/2a/07/murchison-falls-view.jpg?w=1000&h=-1&s=1',
+      title: 'Murchison Falls Safari',
+      subtitle: 'Where the Nile thunders through dramatic gorges',
+      cta: 'Explore Murchison'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=1920&q=80',
+      title: 'Chimpanzee Tracking',
+      subtitle: 'Encounter our closest relatives in Kibale Forest',
+      cta: 'Primate Tours'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1741850821428-01abc97866b3?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      title: 'Safari Camping',
+      subtitle: 'Sleep under the stars in comfort and style',
+      cta: 'View Camps'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1551357140-c61c4f40224e?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      title: 'Lake Bunyonyi Relaxation',
+      subtitle: 'Unwind on Africa\'s most scenic lake with 29 islands',
+      cta: 'Lake Retreats'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1621414050946-1b936a78491f?q=80&w=873&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      title: 'Rwenzori Mountains Trek',
+      subtitle: 'Conquer the legendary Mountains of the Moon',
+      cta: 'Mountain Expeditions'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1629248457649-b082812aea6c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      title: 'Jinja Adventure Capital',
+      subtitle: 'White-water rafting at the Source of the Nile',
+      cta: 'Adventure Tours'
+    },
+    {
+    image: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=1920&q=80',
+    title: 'Tree-Climbing Lions',
+    subtitle: 'Witness the unique behavior of the Ishasha kings',
+    cta: 'Queen Elizabeth Park'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1667817418453-3489bb60ce9b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Kidepo Valley Wilderness',
+    subtitle: 'Discover Africa\'s most hidden and rugged gem',
+    cta: 'Explore Kidepo'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1660675133902-acd1b057f75d?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Cultural Heritage',
+    subtitle: 'Meet the vibrant communities and traditions of Uganda',
+    cta: 'Cultural Tours'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1661885869635-eeb583e3378f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'The Source of the Nile',
+    subtitle: 'Stand at the beginning of the world\'s longest river',
+    cta: 'Visit Jinja'
+  },
+  {
+    image: 'https://plus.unsplash.com/premium_photo-1722686568915-b40ee8a6c072?q=80&w=787&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Birding Paradise',
+    subtitle: 'Home to over 1,000 species, including the Shoebill Stork',
+    cta: 'Birding Safaris'
+  }
+];
   const nextSlide = () => {
     if (!isAnimating) {
       setIsAnimating(true);

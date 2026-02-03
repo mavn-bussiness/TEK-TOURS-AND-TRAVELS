@@ -22,188 +22,188 @@ const Destinations = () => {
   }, []);
 
   // Organized destination data by column
-  const destinationColumns = [
-    {
-      destinations: [
-        {
-          id: 'santorini',
-          image: 'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=600&q=80',
-          title: 'Santorini',
-          location: 'Greece',
-          category: 'Island Paradise',
-          duration: '7 Days',
-          groupSize: '12-16',
-          description: 'Iconic white-washed villages and stunning sunsets'
-        },
-        {
-          id: 'maldives',
-          image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&q=80',
-          title: 'Maldives',
-          location: 'Indian Ocean',
-          category: 'Luxury Beach',
-          duration: '7 Days',
-          groupSize: '2-4',
-          description: 'Crystal waters and overwater bungalows'
-        },
-        {
-          id: 'bali',
-          image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80',
-          title: 'Bali',
-          location: 'Indonesia',
-          category: 'Cultural Beach',
-          duration: '9 Days',
-          groupSize: '10-15',
-          description: 'Temples, rice terraces, and tropical beaches'
-        },
-        {
-          id: 'seychelles',
-          image: 'https://images.unsplash.com/photo-1589197331516-6c0c71d37ebc?w=600&q=80',
-          title: 'Seychelles',
-          location: 'East Africa',
-          category: 'Island Paradise',
-          duration: '7 Days',
-          groupSize: '4-8',
-          description: 'Pristine beaches and granite rock formations'
-        }
-      ],
-      offset: 0
-    },
-    {
-      destinations: [
-        {
-          id: 'swiss-alps',
-          image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600&q=80',
-          title: 'Swiss Alps',
-          location: 'Switzerland',
-          category: 'Mountain Trek',
-          duration: '10 Days',
-          groupSize: '8-12',
-          description: 'Majestic peaks and alpine meadows'
-        },
-        {
-          id: 'patagonia',
-          image: 'https://images.unsplash.com/photo-1611214729937-e4ab5f85ab5c?w=600&q=80',
-          title: 'Patagonia',
-          location: 'Argentina & Chile',
-          category: 'Wilderness',
-          duration: '12 Days',
-          groupSize: '8-10',
-          description: 'Glaciers, peaks, and wild landscapes'
-        },
-        {
-          id: 'nepal',
-          image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80',
-          title: 'Nepal',
-          location: 'Himalayas',
-          category: 'Mountain Trek',
-          duration: '14 Days',
-          groupSize: '10-12',
-          description: 'Himalayan trails and ancient monasteries'
-        },
-        {
-          id: 'dolomites',
-          image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80',
-          title: 'Dolomites',
-          location: 'Italy',
-          category: 'Alpine Adventure',
-          duration: '8 Days',
-          groupSize: '12-16',
-          description: 'Dramatic peaks and mountain villages'
-        }
-      ],
-      offset: -150
-    },
-    {
-      destinations: [
-        {
-          id: 'kyoto',
-          image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80',
-          title: 'Kyoto',
-          location: 'Japan',
-          category: 'Cultural Heritage',
-          duration: '8 Days',
-          groupSize: '12-18',
-          description: 'Ancient temples and zen gardens'
-        },
-        {
-          id: 'morocco',
-          image: 'https://images.unsplash.com/photo-1431274172761-fca41d930114?w=600&q=80',
-          title: 'Morocco',
-          location: 'North Africa',
-          category: 'Desert Culture',
-          duration: '10 Days',
-          groupSize: '12-16',
-          description: 'Souks, kasbahs, and Sahara dunes'
-        },
-        {
-          id: 'machu-picchu',
-          image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=600&q=80',
-          title: 'Machu Picchu',
-          location: 'Peru',
-          category: 'Ancient Wonder',
-          duration: '10 Days',
-          groupSize: '10-12',
-          description: 'Incan citadel in the clouds'
-        },
-        {
-          id: 'egypt',
-          image: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=600&q=80',
-          title: 'Egypt',
-          location: 'North Africa',
-          category: 'Ancient Heritage',
-          duration: '12 Days',
-          groupSize: '15-20',
-          description: 'Pyramids, temples, and the Nile'
-        }
-      ],
-      offset: -75
-    },
-    {
-      destinations: [
-        {
-          id: 'serengeti',
-          image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
-          title: 'Serengeti',
-          location: 'Tanzania',
-          category: 'Safari Adventure',
-          duration: '11 Days',
-          groupSize: '6-8',
-          description: 'Great migration and Big Five'
-        },
-        {
-          id: 'masai-mara',
-          image: 'https://images.unsplash.com/photo-1547970810-dc1e684a4a8d?w=600&q=80',
-          title: 'Masai Mara',
-          location: 'Kenya',
-          category: 'Wildlife Safari',
-          duration: '9 Days',
-          groupSize: '8-10',
-          description: 'Witness wildlife in their natural habitat'
-        },
-        {
-          id: 'kruger',
-          image: 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=600&q=80',
-          title: 'Kruger Park',
-          location: 'South Africa',
-          category: 'Safari Experience',
-          duration: '10 Days',
-          groupSize: '10-14',
-          description: 'Diverse wildlife and luxury lodges'
-        },
-        {
-          id: 'galapagos',
-          image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80',
-          title: 'Galápagos',
-          location: 'Ecuador',
-          category: 'Wildlife Expedition',
-          duration: '12 Days',
-          groupSize: '12-16',
-          description: 'Unique wildlife and volcanic islands'
-        }
-      ],
-      offset: -225
-    }
-  ];
+ const destinationColumns = [
+  {
+    destinations: [
+      {
+        id: 'bwindi-impenetrable',
+        image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&q=80',
+        title: 'Bwindi Impenetrable Forest',
+        location: 'Southwestern Uganda',
+        category: 'Gorilla Trekking',
+        duration: '4 Days',
+        groupSize: '4-8',
+        description: 'Unforgettable mountain gorilla trekking and lush rainforest adventures'
+      },
+      {
+        id: 'murchison-falls',
+        image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80',
+        title: 'Murchison Falls NP',
+        location: 'Northwestern Uganda',
+        category: 'Safari & Waterfalls',
+        duration: '3 Days',
+        groupSize: '6-12',
+        description: 'Thundering Nile waterfall and classic African safari experiences'
+      },
+      {
+        id: 'queen-elizabeth',
+        image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
+        title: 'Queen Elizabeth NP',
+        location: 'Western Uganda',
+        category: 'Wildlife Safari',
+        duration: '3 Days',
+        groupSize: '6-14',
+        description: 'Diverse ecosystems, boat cruises, and iconic wildlife sightings'
+      },
+      {
+        id: 'lake-bunyonyi',
+        image: 'https://images.unsplash.com/photo-1611416517780-eff3a2f57b89?w=600&q=80',
+        title: 'Lake Bunyonyi',
+        location: 'Southwestern Uganda',
+        category: 'Scenic Lake',
+        duration: '2 Days',
+        groupSize: '2-6',
+        description: 'Serene lake with island hopping, swimming and beautiful views'
+      }
+    ],
+    offset: 0
+  },
+  {
+    destinations: [
+      {
+        id: 'rwenzori-mountains',
+        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
+        title: 'Rwenzori Mountains',
+        location: 'Western Uganda',
+        category: 'Mountain Trek',
+        duration: '7 Days',
+        groupSize: '6-10',
+        description: 'Hike the "Mountains of the Moon" with glaciers and waterfalls'
+      },
+      {
+        id: 'jinja-nile',
+        image: 'https://images.unsplash.com/photo-1624714463892-c0e3fe9b1eb1?w=600&q=80',
+        title: 'Jinja & Source of Nile',
+        location: 'Eastern Uganda',
+        category: 'Adventure & River',
+        duration: '2 Days',
+        groupSize: '4-8',
+        description: 'Adventure capital with white-water rafting and Nile views'
+      },
+      {
+        id: 'kibale-forest',
+        image: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80',
+        title: 'Kibale Forest',
+        location: 'Western Uganda',
+        category: 'Chimpanzee Safari',
+        duration: '3 Days',
+        groupSize: '6-10',
+        description: 'Chimpanzee tracking and rich primate biodiversity'
+      },
+      {
+        id: 'lake-victoria',
+        image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80',
+        title: 'Lake Victoria',
+        location: 'Central Uganda',
+        category: 'Lakeside Leisure',
+        duration: '2 Days',
+        groupSize: '2-6',
+        description: 'Africa\'s largest lake with beaches, boat tours and birdlife'
+      }
+    ],
+    offset: -150
+  },
+  {
+    destinations: [
+      {
+        id: 'entebbe-gardens',
+        image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?w=600&q=80',
+        title: 'Entebbe Botanical Gardens',
+        location: 'Entebbe, Uganda',
+        category: 'Nature & Birdwatching',
+        duration: '1 Day',
+        groupSize: '4-8',
+        description: 'Explore tropical plant life, birds and lakeside scenery'
+      },
+      {
+        id: 'lake-mburo',
+        image: 'https://images.pexels.com/photos/33045/animal-zebra-lake-blog-mburo.jpg?w=600&q=80',
+        title: 'Lake Mburo NP',
+        location: 'Western Uganda',
+        category: 'Safari Getaway',
+        duration: '2 Days',
+        groupSize: '4-8',
+        description: 'Easy safari with zebras, antelope, and birdlife'
+      },
+      {
+        id: 'tororo-rock',
+        image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',
+        title: 'Tororo Rock',
+        location: 'Eastern Uganda',
+        category: 'Hiking & Views',
+        duration: '1 Day',
+        groupSize: '6-12',
+        description: 'Climb the iconic volcanic rock for panoramic views'
+      },
+      {
+        id: 'uganda-mosque',
+        image: 'https://images.pexels.com/photos/5024619/pexels-photo-5024619.jpeg?w=600&q=80',
+        title: 'Uganda National Mosque',
+        location: 'Kampala, Uganda',
+        category: 'Cultural Landmark',
+        duration: '1 Day',
+        groupSize: '1-4',
+        description: 'Visit East Africa\'s largest mosque and city views'
+      }
+    ],
+    offset: -75
+  },
+  {
+    destinations: [
+      {
+        id: 'kidepo-valley',
+        image: 'https://images.unsplash.com/photo-1484406566174-9da000fda645?w=600&q=80',
+        title: 'Kidepo Valley NP',
+        location: 'Northern Uganda',
+        category: 'Remote Safari',
+        duration: '4 Days',
+        groupSize: '6-10',
+        description: 'Wild, rugged landscapes and classic savannah wildlife'
+      },
+      {
+        id: 'semuliki',
+        image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80',
+        title: 'Semuliki National Park',
+        location: 'Western Uganda',
+        category: 'Forest & Hot Springs',
+        duration: '3 Days',
+        groupSize: '4-8',
+        description: 'Explore hot springs and dense rainforest'
+      },
+      {
+        id: 'zziwa-rhino',
+        image: 'https://images.unsplash.com/photo-1568454537842-d933259bb258?w=600&q=80',
+        title: 'Ziwa Rhino Sanctuary',
+        location: 'Central Uganda',
+        category: 'Wildlife Sanctuary',
+        duration: '1 Day',
+        groupSize: '4-10',
+        description: 'Track rhinos on foot in Uganda\'s only rhino sanctuary'
+      },
+      {
+        id: 'kampala-city',
+        image: 'https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=600&q=80',
+        title: 'Kampala City',
+        location: 'Central Uganda',
+        category: 'Urban & Culture',
+        duration: '2 Days',
+        groupSize: '1-6',
+        description: 'Experience lively markets, museums, and nightlife'
+      }
+    ],
+    offset: -225
+  }
+];
 
   // Flatten for mobile horizontal scroll
   const allDestinations = destinationColumns.flatMap(col => col.destinations);
@@ -266,7 +266,7 @@ const Destinations = () => {
               className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-4"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
-              Explore The World
+              Explore Uganda
             </span>
             
             <h2 
@@ -322,7 +322,7 @@ const Destinations = () => {
                           {destination.description}
                         </p>
 
-                        <div className="flex items-center justify-between text-white/70 text-xs mb-3">
+                        <div className="flex items-center justify-between text-white/70 text-xs">
                           <div className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             <span>{destination.duration}</span>
@@ -332,11 +332,6 @@ const Destinations = () => {
                             <span>{destination.groupSize}</span>
                           </div>
                         </div>
-
-                        <button className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
-                          <Play className="w-4 h-4 fill-white" />
-                          View Tour
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -344,18 +339,6 @@ const Destinations = () => {
               ))}
             </div>
           </div>
-
-          {/* View All Button */}
-          <div className="px-4 sm:px-6 mt-8">
-            <Link 
-              to="/destinations"
-              className="px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 group"
-            >
-              <span>View All</span>
-              <Play className="w-4 h-4 fill-white group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
         </div>
 
         <style jsx>{`
@@ -390,14 +373,14 @@ const Destinations = () => {
               className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-6"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
-              Explore The World
+              Explore Uganda
             </span>
             
             <h2 
               className="text-5xl xl:text-6xl text-white font-bold mb-6 leading-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              destinations,
+              Destinations,
               <br />
               tours and
               <br />
@@ -413,10 +396,6 @@ const Destinations = () => {
             </p>
             
             <div className="flex flex-col gap-4">
-              <button className="px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 group">
-                <span>View All</span>
-                <Play className="w-4 h-4 fill-white group-hover:translate-x-1 transition-transform" />
-              </button>
               <button className="px-8 py-4 bg-transparent hover:bg-white/10 text-white font-semibold rounded-lg border-2 border-white/30 hover:border-white/50 transition-all duration-300">
                 Contact Us
               </button>
@@ -486,17 +465,6 @@ const Destinations = () => {
                             <p className="text-white/90 text-sm text-center px-6 mb-2" style={{ fontFamily: "'Crimson Text', serif" }}>
                               {destination.description}
                             </p>
-
-                            <div className="flex flex-col gap-2 w-full px-6">
-                              <button className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
-                                <Play className="w-4 h-4 fill-white" />
-                                View Tour
-                              </button>
-                              <button className="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 border border-white/30">
-                                <Info className="w-4 h-4" />
-                                Details
-                              </button>
-                            </div>
 
                             <div className="flex items-center justify-center gap-4 text-white/70 text-xs mt-2">
                               <div className="flex items-center gap-1">
