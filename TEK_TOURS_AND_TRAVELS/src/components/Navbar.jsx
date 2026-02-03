@@ -31,11 +31,11 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', href: '/', type: 'link' },
-    { name: 'About', href: '#about', type: 'hash' },
+    { name: 'About', href: '/about', type: 'link' },
     { name: 'Destinations', href: '/destinations', type: 'link' },
     { name: 'Packages', href: '/packages', type: 'link' },
-    { name: 'Gallery', href: '#gallery', type: 'hash' },
-    { name: 'Contact', href: '#contact', type: 'hash' }
+    { name: 'Gallery', href: '/gallery', type: 'link' },
+    { name: 'Contact', href: '#footer', type: 'hash' }
   ];
 
   const scrollToSection = (hash) => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Calendar, MapPin, Phone, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Calendar, MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const TopBanner = () => {
   const getFormattedDate = () => {
@@ -33,14 +34,15 @@ const TopBanner = () => {
         </div>
 
         {/* Book Now CTA */}
-        <button 
+        <Link 
+          to="/booking"
           className="px-5 py-1 bg-white text-amber-900 font-semibold tracking-wide hover-lift rounded-sm text-xs" 
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
           BOOK NOW
-        </button>
+        </Link>
 
-        {/* Social Media Icons */}
+        {/* Social Media Icons & Contact */}
         <div className="flex items-center gap-3">
           <a href="#" className="hover:scale-110 transition-transform duration-200" aria-label="Facebook">
             <Facebook className="w-3.5 h-3.5" />
@@ -51,7 +53,11 @@ const TopBanner = () => {
           <a href="#" className="hover:scale-110 transition-transform duration-200" aria-label="Twitter">
             <Twitter className="w-3.5 h-3.5" />
           </a>
-          <a href="tel:+256705407794" className="flex items-center gap-2 ml-2 opacity-90 hover:opacity-100 transition-opacity">
+          <a href="mailto:info@tektours.com" className="flex items-center gap-2 ml-2 opacity-90 hover:opacity-100 transition-opacity">
+            <Mail className="w-3.5 h-3.5" />
+            <span className="text-xs font-medium">info@tektours.com</span>
+          </a>
+          <a href="tel:+256705407794" className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
             <Phone className="w-3.5 h-3.5" />
             <span className="text-xs font-medium">+256 705-407-794</span>
           </a>
