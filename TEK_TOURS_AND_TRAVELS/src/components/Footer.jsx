@@ -15,7 +15,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-slate-900 text-white">
+    <footer id="footer" className="relative bg-slate-900 text-white">
       {/* Top divider */}
       <div className="h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent" />
 

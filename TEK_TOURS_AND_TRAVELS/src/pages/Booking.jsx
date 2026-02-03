@@ -3,16 +3,15 @@ import { Mail, MapPin, Check } from "lucide-react";
 
 const CONTACT_EMAIL = "bookings@yoursafari.com";
 
-/* ── video bg (fixed, behind everything) ── */
-const VideoBg = () => (
+/* ── optimized image bg (fixed, behind everything) ── */
+const ImageBg = () => (
   <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
-    <video
-      autoPlay muted loop playsInline
+    <img
+      src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&q=80&auto=format&fit=crop"
+      alt="Ocean view"
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-      poster="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1280&q=60"
-    >
-      <source src="https://mixkit-cdn-videos.fastcdn.io/mixkit-waves-crashing-on-a-beach-19834-1080.mp4" type="video/mp4" />
-    </video>
+      loading="eager"
+    />
     {/* multi-stop overlay: darker at top & bottom, lighter mid so glass pops */}
     <div style={{
       position: "absolute", inset: 0,
@@ -24,9 +23,9 @@ const VideoBg = () => (
 /* ── shared styles ── */
 const styles = {
   glass: {
-    background: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 100%)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
     border: "1px solid rgba(255,255,255,0.25)",
     boxShadow: "0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)"
   },
@@ -105,7 +104,7 @@ export default function Booking() {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 16px", position: "relative" }}>
         <InjectStyles />
-        <VideoBg />
+        <ImageBg />
         <div style={{ position: "relative", zIndex: 1, textAlign: "center", maxWidth: 380, width: "100%" }}>
           <div style={{
             width: 88, height: 88, borderRadius: "50%", margin: "0 auto 24px",
@@ -141,21 +140,21 @@ export default function Booking() {
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
       <InjectStyles />
-      <VideoBg />
+      <ImageBg />
 
-      {/* content – 140 px top pad clears any fixed nav */}
+      {/* content – 120 px top pad clears any fixed nav */}
       <div style={{
         position: "relative", zIndex: 1,
         maxWidth: 600, margin: "0 auto",
-        padding: "140px 18px 60px",
+        padding: "120px 18px 50px",
         minHeight: "100vh", display: "flex", flexDirection: "column"
       }}>
 
         {/* header */}
-        <div style={{ textAlign: "center", marginBottom: 28 }}>
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "6px 18px", borderRadius: 999, marginBottom: 16,
+            padding: "6px 18px", borderRadius: 999, marginBottom: 14,
             background: "rgba(255,255,255,0.1)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
             border: "1px solid rgba(255,255,255,0.18)"
           }}>
@@ -164,7 +163,7 @@ export default function Booking() {
               Destinations
             </span>
           </div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 7vw, 42px)", color: "#fff", margin: "0 0 8px", fontWeight: 700, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(26px, 6vw, 40px)", color: "#fff", margin: "0 0 8px", fontWeight: 700, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
             Plan Your Tour
           </h1>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(186,230,253,0.85)", margin: 0 }}>
@@ -173,10 +172,10 @@ export default function Booking() {
         </div>
 
         {/* ── GLASS CARD ── */}
-        <div style={{ ...styles.glass, borderRadius: 22, overflow: "hidden", flex: 1 }}>
+        <div style={{ ...styles.glass, borderRadius: 20, overflow: "hidden", flex: 1 }}>
           <div style={{ height: 3, background: "linear-gradient(90deg, transparent, rgba(125,211,252,0.7), rgba(56,189,248,0.9), rgba(125,211,252,0.7), transparent)" }} />
 
-          <div style={{ padding: "28px 24px 32px" }}>
+          <div style={{ padding: "24px 20px 28px" }}>
             {/* row 1 – name & email */}
             <div className="row-pair">
               <div style={{ flex: 1 }}>
@@ -190,7 +189,7 @@ export default function Booking() {
             </div>
 
             {/* row 2 – phone & destination */}
-            <div className="row-pair" style={{ marginTop: 16 }}>
+            <div className="row-pair" style={{ marginTop: 14 }}>
               <div style={{ flex: 1 }}>
                 <label style={styles.label}>Phone</label>
                 <input className="glass-input" type="tel" name="phone" value={form.phone} onChange={change} placeholder="+256 700 000 000" style={styles.input} />
@@ -202,7 +201,7 @@ export default function Booking() {
             </div>
 
             {/* message */}
-            <div style={{ marginTop: 16 }}>
+            <div style={{ marginTop: 14 }}>
               <label style={styles.label}>
                 Anything else? <span style={{ textTransform: "none", fontWeight: 400, color: "rgba(255,255,255,0.38)" }}>(dates, group size, budget…)</span>
               </label>
@@ -213,8 +212,8 @@ export default function Booking() {
 
             {/* send button */}
             <button type="button" onClick={handleSend} style={{
-              marginTop: 22, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-              padding: "14px 0", borderRadius: 12, border: "none", cursor: "pointer",
+              marginTop: 20, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+              padding: "13px 0", borderRadius: 12, border: "none", cursor: "pointer",
               background: "linear-gradient(135deg, #0369a1, #0284c7)",
               color: "#fff", fontSize: 15, fontWeight: 700, fontFamily: "'Montserrat', sans-serif",
               boxShadow: "0 4px 20px rgba(3,105,161,0.45)", transition: "transform 0.15s, box-shadow 0.15s"
@@ -228,14 +227,14 @@ export default function Booking() {
               Send Enquiry
             </button>
 
-            <p style={{ textAlign: "center", marginTop: 14, fontSize: 12, fontFamily: "'Montserrat', sans-serif", color: "rgba(255,255,255,0.42)", lineHeight: 1.5 }}>
+            <p style={{ textAlign: "center", marginTop: 12, fontSize: 12, fontFamily: "'Montserrat', sans-serif", color: "rgba(255,255,255,0.42)", lineHeight: 1.5 }}>
               Opens your email with details pre-filled — just hit send.
             </p>
           </div>
         </div>
 
         {/* branding */}
-        <p style={{ textAlign: "center", marginTop: 20, fontSize: 11, fontFamily: "'Montserrat', sans-serif", color: "rgba(186,230,253,0.6)", letterSpacing: "0.14em", textTransform: "uppercase" }}>
+        <p style={{ textAlign: "center", marginTop: 18, fontSize: 11, fontFamily: "'Montserrat', sans-serif", color: "rgba(186,230,253,0.6)", letterSpacing: "0.14em", textTransform: "uppercase" }}>
           Destinations · The Holiday &amp; Travel Show
         </p>
       </div>
