@@ -57,9 +57,9 @@ const TopBanner = () => {
             <Mail className="w-3.5 h-3.5" />
             <span className="text-xs font-medium">info@tektours.com</span>
           </a>
-          <a href="tel:+256705407794" className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
+          <a href="tel:‎+256743161414" className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
             <Phone className="w-3.5 h-3.5" />
-            <span className="text-xs font-medium">+256 705-407-794</span>
+            <span className="text-xs font-medium">‎+256-743-161-414</span>
           </a>
         </div>
       </div>
