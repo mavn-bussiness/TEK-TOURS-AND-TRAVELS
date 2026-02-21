@@ -133,7 +133,7 @@ const Navbar = () => {
             }`}
           >
             <Phone className="w-4 h-4" />
-            <span className="text-sm font-medium">+256 705-407-794</span>
+            <span className="text-sm font-medium">‎+256 743 161 414</span>
           </a>
 
           <Link
