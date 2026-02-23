@@ -101,8 +101,9 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 mt-0.5" />
                 <span>
-                Buwama,  <br />
-                Mpigi District, Uganda
+                Plot 330 Block 10 house 15,  <br />
+                Kiyindi Lane Nakulabye Trading Center, <br />
+                Bukesa Mengo  
                 </span>
               </div>
             </div>
@@ -129,7 +130,7 @@ const Footer = () => {
           <p>
             Powered by{" "}
             <a
-              href="#"
+              href="www.linkedin.com/in/mpanga-marvin"
               className="text-amber-400 hover:underline"
             >
               MAVN
