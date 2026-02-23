@@ -130,7 +130,7 @@ const Footer = () => {
           <p>
             Powered by{" "}
             <a
-              href="www.linkedin.com/in/mpanga-marvin"
+              href="https://linkedin.com/in/mpanga-marvin"
               className="text-amber-400 hover:underline"
             >
               MAVN
