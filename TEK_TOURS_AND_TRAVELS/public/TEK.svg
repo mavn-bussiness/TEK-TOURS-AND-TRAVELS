@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D76E"></stop>
+      <stop offset="50%" stop-color="#D4AF37"></stop>
+      <stop offset="100%" stop-color="#B8962E"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="64" height="64" rx="14" fill="#0B1D2A"></rect>
+
+  <!-- Gradient Gold T -->
+  <path d="M16 18 H48 V26 H36 V46 H28 V26 H16 Z" fill="url(#gold)"></path>
+</svg>
