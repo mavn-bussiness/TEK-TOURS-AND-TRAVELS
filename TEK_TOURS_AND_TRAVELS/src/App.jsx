@@ -8,7 +8,7 @@ import Introduction from './components/Introduction';
 import Destinations from './components/Destinations';
 import GalleryPreview from './components/GalleryPreview';
 import Footer from './components/Footer';
-import Packages from './components/Packages';
+import WhyChooseUs from './components/WhyChooseUs';
 import AllDestinations from './pages/AllDestinations';
 import AllPackages from './pages/AllPackages';
 import DestinationDetail from './pages/DestinationDetail';
@@ -28,7 +28,7 @@ function App() {
             <Hero />
             <Introduction />
             <Destinations />
-            <Packages />
+            <WhyChooseUs />
             <GalleryPreview />
           </>
         } />

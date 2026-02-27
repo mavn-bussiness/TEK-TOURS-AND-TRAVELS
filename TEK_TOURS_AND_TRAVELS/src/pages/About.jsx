@@ -1,182 +1,176 @@
-import React from 'react';
-import { Award, Users, Globe, Heart, CheckCircle, ArrowUpRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Award, Users, Globe, Heart, CheckCircle, ArrowUpRight, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const About = () => {
+  const [hoveredValue, setHoveredValue] = useState(null);
+
   const values = [
     {
       icon: Heart,
       title: 'Passion for Travel',
-      description: 'We live and breathe adventure, bringing you closer to the heart of Uganda.'
+      description: 'Every trip we plan starts with genuine excitement. We love what we do — and that energy shows in every itinerary we craft.',
+      color: '#d4855a',
     },
     {
       icon: Users,
-      title: 'Expert Guides',
-      description: 'Local knowledge combined with international expertise for authentic experiences.'
+      title: 'Personal Attention',
+      description: 'You\'re not a booking reference. From your first message to your final day, we give you the attention a real guest deserves.',
+      color: '#6aab6a',
     },
     {
       icon: Globe,
-      title: 'Sustainable Tourism',
-      description: 'Committed to preserving Uganda\'s natural beauty for generations to come.'
+      title: 'World Without Limits',
+      description: 'Africa is our home, but the world is our playground. We arrange journeys from Uganda\'s forests to China\'s ancient walls.',
+      color: '#5b9bd5',
     },
     {
       icon: Award,
-      title: 'Award-Winning Service',
-      description: 'Recognized for excellence in customer satisfaction and tour quality.'
-    }
+      title: 'Honest & Transparent',
+      description: 'No hidden costs, no vague promises. We tell you exactly what\'s included, what to expect, and how to prepare.',
+      color: '#b8975a',
+    },
   ];
 
   const stats = [
-    { number: '15+', label: 'Years Experience' },
-    { number: '5000+', label: 'Happy Travelers' },
-    { number: '50+', label: 'Tour Packages' },
-    { number: '98%', label: 'Satisfaction Rate' }
+    { number: 'New', label: 'Fresh & Hungry', sub: 'Not yet jaded by routine' },
+    { number: '100%', label: 'Personalised', sub: 'No cookie-cutter packages' },
+    { number: 'Global', label: 'Destinations', sub: 'Africa, Asia & beyond' },
+    { number: '24/7', label: 'Support', sub: 'We answer. Always.' },
   ];
 
   const features = [
-    'Personalized itineraries tailored to your interests',
-    '24/7 customer support throughout your journey',
-    'Licensed and experienced tour guides',
-    'Comfortable and safe transportation',
-    'Partnerships with top-rated accommodations',
-    'Comprehensive travel insurance options',
-    'Flexible booking and cancellation policies',
-    'Eco-friendly and responsible tourism practices'
+    'Custom itineraries built around your schedule and interests',
+    'Direct communication — no call centres, no bots',
+    'Licensed, knowledgeable guides in every destination',
+    'Vetted accommodation partners across all price points',
+    'Flexible booking terms and transparent pricing',
+    'Group tours and private trips available',
+    'Responsible travel practices that give back locally',
+    'Airport transfers, visas, and logistics sorted for you',
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative h-[60vh] sm:h-[70vh] bg-slate-900">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=1920&q=80"
-            alt="About Tek Tours"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
-        </div>
+    <div className="min-h-screen" style={{ background: '#0a0a0f' }}>
 
-        <div className="relative z-10 h-full flex items-center justify-center px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <p
-              className="text-xs sm:text-sm tracking-widest uppercase text-amber-400 font-semibold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Discover Our Story
-            </p>
+      {/* ── HERO ── */}
+      <section className="relative" style={{ height: '60vh', minHeight: 380 }}>
+        <img
+          src="/images/IMG_20230828_131906.jpg"
+          alt="Tek Tours travelers at Temple of Heaven, Beijing"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: 'center bottom' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-[#0a0a0f]" />
+        {/* grain */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: '200px' }} />
 
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6"
-              style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800 }}
-            >
-              About Tek Tours & Travels
-            </h1>
-
-            <div className="flex justify-center mb-6">
-              <div className="h-1 w-24 bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
-            </div>
-
-            <p
-              className="text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mx-auto"
-              style={{ fontFamily: "'Crimson Text', serif" }}
-            >
-              Crafting unforgettable journeys through the Pearl of Africa since 2009
-            </p>
-          </div>
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center">
+          <span className="inline-block px-4 py-2 rounded-full border text-xs tracking-widest uppercase mb-5"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a', borderColor: 'rgba(184,151,90,0.3)', background: 'rgba(184,151,90,0.08)' }}>
+            Our Story
+          </span>
+          <h1 className="text-white leading-none mb-4"
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px, 7vw, 86px)', letterSpacing: '-0.02em' }}>
+            About <span className="italic" style={{ color: '#c9e89d' }}>Tek Tours</span>
+          </h1>
+          <div className="mb-5" style={{ width: 56, height: 2, background: 'linear-gradient(90deg, transparent, #b8975a, transparent)' }} />
+          <p className="text-white/60 max-w-xl" style={{ fontFamily: "'Crimson Text', serif", fontSize: 18 }}>
+            A new name in travel — built on honesty, personal service, and a genuine love for the world
+          </p>
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-amber-50 to-white pointer-events-none" />
+      {/* ── OUR STORY ── */}
+      <section className="relative py-16 sm:py-24">
+        {/* ambient */}
+        <div className="absolute top-0 left-1/4 pointer-events-none"
+          style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(184,151,90,0.06) 0%, transparent 70%)', filter: 'blur(60px)' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Content */}
+          <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
+
+            {/* Left */}
             <div>
-              <p
-                className="text-xs sm:text-sm tracking-widest uppercase text-amber-600 font-semibold mb-4"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Our Journey
+              <p className="text-xs tracking-widest uppercase font-semibold mb-4"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a' }}>
+                Who We Are
               </p>
-
-              <h2
-                className="text-3xl sm:text-4xl lg:text-5xl text-gray-900 leading-tight mb-6"
-                style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }}
-              >
-                More Than Just a <br />
-                <span className="italic font-normal text-amber-700">Travel Company</span>
+              <h2 className="text-white leading-tight mb-6"
+                style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 'clamp(28px, 4vw, 48px)' }}>
+                Just Starting Out — <br />
+                <span className="italic font-normal" style={{ color: '#c9e89d' }}>and That's the Point</span>
               </h2>
+              <div className="mb-6" style={{ width: 60, height: 2, background: 'linear-gradient(90deg, #b8975a, transparent)' }} />
 
-              <div className="h-1 w-20 bg-gradient-to-r from-amber-600 to-transparent mb-6" />
-
-              <div className="space-y-4 text-gray-700" style={{ fontFamily: "'Crimson Text', serif" }}>
-                <p className="text-base md:text-lg leading-relaxed">
-                  Choosing a tour company is about trust. We understand that — especially when you’re traveling somewhere new.
-
-That’s why we focus on transparency, flexibility, and personal attention. From your first message to the final goodbye, you’re not just a booking — you’re a guest.
-
+              <div className="space-y-5" style={{ fontFamily: "'Crimson Text', serif", fontSize: 18, color: 'rgba(255,255,255,0.72)', lineHeight: 1.8 }}>
+                <p>
+                  Tek Tours & Travels is a new travel company — and we wear that proudly. We haven't been doing this long enough to get complacent. Every client still matters enormously to us, and every trip still gets our full attention.
                 </p>
-
-                <p className="text-base md:text-lg leading-relaxed">
-                  We believe that travel should be transformative. Every journey we design is crafted 
-                  with care, combining thrilling adventures with authentic cultural encounters. Our team 
-                  of experienced guides doesn't just show you Uganda – they help you feel it, understand 
-                  it, and fall in love with it.
+                <p>
+                  We're based in Uganda, and East Africa is where our expertise runs deepest. But our ambitions — and our bookings — stretch across the globe. Our recent group trips to Beijing, Phuket, Dubai, and Istanbul are proof that we're just as comfortable arranging international adventures as we are navigating the forests of Bwindi.
                 </p>
-
-                <p className="text-base md:text-lg leading-relaxed">
-                  Based in Buwama, Mpigi District, we maintain close relationships with local communities 
-                  and conservation efforts across Uganda. When you travel with us, you're not just a tourist 
-                  – you're part of a sustainable tourism movement that benefits both visitors and locals alike.
+                <p>
+                  Choosing a tour company is about trust, especially somewhere new. We earn that trust by being straight with you: transparent pricing, honest recommendations, and real communication — not automated replies or vague itineraries.
                 </p>
+              </div>
+
+              {/* Location pill */}
+              <div className="mt-8 inline-flex items-center gap-2 px-4 py-2.5 rounded-full"
+                style={{ background: 'rgba(184,151,90,0.1)', border: '1px solid rgba(184,151,90,0.25)' }}>
+                <MapPin className="w-4 h-4" style={{ color: '#b8975a' }} />
+                <span className="text-sm" style={{ fontFamily: "'Montserrat', sans-serif", color: '#d4af6e' }}>
+                  Based in Buwama, Mpigi District, Uganda
+                </span>
               </div>
             </div>
 
-            {/* Right - Image */}
+            {/* Right — two stacked images */}
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl"
+                style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1535082623926-b39352a03fb7?w=1200&q=80"
-                  alt="Safari Adventure"
-                  className="w-full h-[500px] object-cover"
+                  src="/images/IMG_20230826_145742.jpg"
+                  alt="Travelers on the Great Wall of China"
+                  className="w-full object-cover"
+                  style={{ height: 420 }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs"
+                    style={{ fontFamily: "'Montserrat', sans-serif", background: 'rgba(10,10,15,0.65)', backdropFilter: 'blur(8px)', color: '#d4af6e', border: '1px solid rgba(212,175,110,0.3)' }}>
+                    <MapPin className="w-3 h-3" /> Great Wall of China
+                  </span>
+                </div>
               </div>
 
-              {/* Floating Card */}
-              <div className="absolute -bottom-8 -left-8 bg-white rounded-xl p-6 shadow-xl max-w-xs">
-                <p className="text-4xl font-bold text-amber-600 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  15+
-                </p>
-                <p className="text-gray-700 font-semibold" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                  Years of Excellence in Uganda Tourism
-                </p>
+              {/* Small inset photo */}
+              <div className="absolute -bottom-5 -right-5 rounded-xl overflow-hidden shadow-2xl"
+                style={{ width: 160, height: 120, border: '3px solid #0a0a0f' }}>
+                <img src="/images/murchison-falls-view.jpg" alt="Murchison Falls, Uganda"
+                  className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="relative py-16 bg-slate-900">
+      {/* ── STATS ── */}
+      <section className="relative py-16"
+        style={{ background: 'rgba(255,255,255,0.03)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <p
-                  className="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-400 mb-2"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x" style={{ '--tw-divide-opacity': 1 }}>
+            {stats.map((stat, i) => (
+              <div key={i} className="text-center px-6">
+                <p className="font-bold mb-1 leading-none" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px, 4vw, 52px)', color: '#d4af6e' }}>
                   {stat.number}
                 </p>
-                <p
-                  className="text-sm sm:text-base text-gray-300 uppercase tracking-wider"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
+                <p className="text-white font-semibold mb-1 text-sm tracking-wide" style={{ fontFamily: "'Montserrat', sans-serif" }}>
                   {stat.label}
+                </p>
+                <p className="text-xs" style={{ fontFamily: "'Crimson Text', serif", color: 'rgba(255,255,255,0.4)' }}>
+                  {stat.sub}
                 </p>
               </div>
             ))}
@@ -184,95 +178,93 @@ That’s why we focus on transparency, flexibility, and personal attention. From
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-stone-50 to-white pointer-events-none" />
+      {/* ── VALUES ── */}
+      <section className="relative py-16 sm:py-24">
+        <div className="absolute bottom-0 right-1/4 pointer-events-none"
+          style={{ width: 400, height: 400, background: 'radial-gradient(circle, rgba(106,171,106,0.06) 0%, transparent 70%)', filter: 'blur(50px)' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="text-center mb-12 sm:mb-16">
-            <p
-              className="text-xs sm:text-sm tracking-widest uppercase text-amber-600 font-semibold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
+          <div className="text-center mb-14">
+            <span className="inline-block px-4 py-2 rounded-full border text-xs tracking-widest uppercase mb-5"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a', borderColor: 'rgba(184,151,90,0.3)', background: 'rgba(184,151,90,0.08)' }}>
               What We Stand For
-            </p>
-
-            <h2
-              className="text-3xl sm:text-4xl lg:text-5xl text-gray-900 leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }}
-            >
-              Our Core Values
+            </span>
+            <h2 className="text-white" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 'clamp(28px, 4vw, 48px)' }}>
+              Our Core <span className="italic font-normal" style={{ color: '#c9e89d' }}>Values</span>
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-                  <value.icon className="w-6 h-6 text-amber-700" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((v, i) => {
+              const Icon = v.icon;
+              const active = hoveredValue === i;
+              return (
+                <div key={i}
+                  onMouseEnter={() => setHoveredValue(i)}
+                  onMouseLeave={() => setHoveredValue(null)}
+                  style={{
+                    borderRadius: 16,
+                    padding: '2rem',
+                    background: active ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+                    border: `1px solid ${active ? v.color + '60' : 'rgba(255,255,255,0.08)'}`,
+                    transform: active ? 'translateY(-6px)' : 'translateY(0)',
+                    transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+                    boxShadow: active ? `0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px ${v.color}30` : 'none',
+                  }}>
+                  <div className="mb-5 inline-flex items-center justify-center rounded-xl"
+                    style={{ width: 50, height: 50, background: active ? v.color + '30' : 'rgba(255,255,255,0.07)' }}>
+                    <Icon style={{ width: 22, height: 22, color: v.color }} />
+                  </div>
+                  <h3 className="text-white font-bold mb-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 20 }}>
+                    {v.title}
+                  </h3>
+                  <p style={{ fontFamily: "'Crimson Text', serif", fontSize: 16, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>
+                    {v.description}
+                  </p>
                 </div>
-                <h3
-                  className="text-xl font-bold text-gray-900 mb-3"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  {value.title}
-                </h3>
-                <p
-                  className="text-gray-600 leading-relaxed"
-                  style={{ fontFamily: "'Crimson Text', serif" }}
-                >
-                  {value.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* What Makes Us Different */}
-      <section className="relative py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-amber-50 to-stone-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+      {/* ── WHAT MAKES US DIFFERENT ── */}
+      <section className="relative py-16 sm:py-24"
+        style={{ background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
+
+            {/* Left — image */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl"
+              style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
               <img
-                src="https://images.unsplash.com/photo-1621414050946-1b936a78491f?w=1200&q=80"
-                alt="Mountain Trek"
-                className="w-full h-[500px] object-cover"
+                src="/images/safari-wild.avif"
+                alt="Open savannah safari"
+                className="w-full object-cover"
+                style={{ height: 500 }}
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
             </div>
 
-            {/* Right - Features */}
+            {/* Right */}
             <div>
-              <p
-                className="text-xs sm:text-sm tracking-widest uppercase text-amber-600 font-semibold mb-4"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
+              <p className="text-xs tracking-widest uppercase font-semibold mb-4"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a' }}>
                 Why Choose Us
               </p>
-
-              <h2
-                className="text-3xl sm:text-4xl lg:text-5xl text-gray-900 leading-tight mb-6"
-                style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }}
-              >
+              <h2 className="text-white leading-tight mb-6"
+                style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 'clamp(28px, 4vw, 48px)' }}>
                 What Makes Us <br />
-                <span className="italic font-normal text-amber-700">Stand Out</span>
+                <span className="italic font-normal" style={{ color: '#c9e89d' }}>Different</span>
               </h2>
+              <div className="mb-8" style={{ width: 60, height: 2, background: 'linear-gradient(90deg, #b8975a, transparent)' }} />
 
-              <div className="h-1 w-20 bg-gradient-to-r from-amber-600 to-transparent mb-8" />
-
-              <div className="grid gap-4">
-                {features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
-                    <p
-                      className="text-gray-700"
-                      style={{ fontFamily: "'Crimson Text', serif", fontSize: '1.125rem' }}
-                    >
-                      {feature}
+              <div className="space-y-4">
+                {features.map((f, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle className="flex-shrink-0 mt-0.5" style={{ width: 18, height: 18, color: '#b8975a' }} />
+                    <p style={{ fontFamily: "'Crimson Text', serif", fontSize: 17, color: 'rgba(255,255,255,0.72)', lineHeight: 1.6 }}>
+                      {f}
                     </p>
                   </div>
                 ))}
@@ -282,43 +274,46 @@ That’s why we focus on transparency, flexibility, and personal attention. From
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24 bg-slate-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
-          <h2
-            className="text-3xl sm:text-4xl lg:text-5xl text-white leading-tight mb-6"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }}
-          >
-            Ready to Start Your <br className="hidden sm:block" />
-            <span className="italic font-normal text-amber-400">Uganda Adventure?</span>
+      {/* ── CTA ── */}
+      <section className="relative py-20 sm:py-28 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920&q=80"
+          alt="Safari background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0"
+          style={{ background: 'linear-gradient(135deg, rgba(10,20,10,0.90) 0%, rgba(10,15,5,0.88) 100%)' }} />
+
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <span className="inline-block px-4 py-2 rounded-full border text-xs tracking-widest uppercase mb-6"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a', borderColor: 'rgba(184,151,90,0.3)', background: 'rgba(184,151,90,0.08)' }}>
+            Let's Plan Your Trip
+          </span>
+          <h2 className="text-white leading-tight mb-4"
+            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 'clamp(30px, 5vw, 56px)' }}>
+            Ready to Go <br />
+            <span className="italic font-normal" style={{ color: '#c9e89d' }}>Somewhere Amazing?</span>
           </h2>
-
-          <p
-            className="text-base md:text-lg text-gray-300 mb-8 max-w-2xl mx-auto"
-            style={{ fontFamily: "'Crimson Text', serif" }}
-          >
-            Let us design a personalized journey that matches your dreams and exceeds your expectations.
+          <p className="mb-10" style={{ fontFamily: "'Crimson Text', serif", fontSize: 19, color: 'rgba(255,255,255,0.65)' }}>
+            Tell us where you want to go — we'll handle everything else. No pressure, no hard sell. Just good travel planning.
           </p>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/packages"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-semibold tracking-wide rounded-full transition-all duration-300 shadow-lg hover-lift"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Browse Packages
-              <ArrowUpRight className="w-5 h-5" />
+            <Link to="/booking"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 shadow-xl"
+              style={{ background: 'linear-gradient(135deg, #b8975a, #d4af6e)', color: '#0a0a0f', fontFamily: "'Montserrat', sans-serif" }}>
+              Start Planning
+              <ArrowUpRight className="w-4 h-4" />
             </Link>
-            <Link
-              to="/booking"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-transparent border-2 border-white text-white hover:bg-white hover:text-slate-900 font-semibold tracking-wide rounded-full transition-all duration-300"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Contact Us
+            <Link to="/packages"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-300"
+              style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.15)', fontFamily: "'Montserrat', sans-serif" }}>
+              Browse Packages
             </Link>
           </div>
         </div>
       </section>
+
+      <style>{`::-webkit-scrollbar { display: none; }`}</style>
     </div>
   );
 };

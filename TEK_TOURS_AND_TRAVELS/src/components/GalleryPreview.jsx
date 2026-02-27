@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const GalleryPreview = () => {
   // Photos: staggered grid — varying sizes, offset positions
   const photos = [
     {
-      src: "https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=900&q=80",
+      src: "https://images.unsplash.com/photo-1509897739002-791fa79aac9b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       alt: "Gorilla in the wild",
       // top-left, tall
       style: { gridColumn: "1", gridRow: "1 / 3", objectPosition: "center" },

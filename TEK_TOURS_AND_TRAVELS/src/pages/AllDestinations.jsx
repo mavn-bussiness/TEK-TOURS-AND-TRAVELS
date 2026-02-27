@@ -1,538 +1,427 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  MapPin, 
-  Clock, 
-  Search,
-  Filter,
-  Mountain,
-  Camera,
-  Loader,
-  Waves,
-  TreePine,
-  Check
+import { Link } from 'react-router-dom';
+import {
+  MapPin, Clock, Search, Mountain,
+  Camera, Loader, Waves, TreePine, Check, ArrowRight, Globe
 } from 'lucide-react';
 
 const AllDestinations = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedCountry, setSelectedCountry] = useState('all');
-  const [visibleCount, setVisibleCount] = useState(4); // Reduced initial load
+  const [selectedRegion, setSelectedRegion] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
+  const [visibleIds, setVisibleIds] = useState(new Set());
   const loadMoreRef = useRef(null);
 
-  // All destinations data
   const allDestinations = [
+    // ── Africa ──
     {
       id: 1,
       name: 'Bwindi Impenetrable Forest',
-      country: 'Uganda',
-      category: 'wildlife',
+      country: 'Uganda', region: 'Africa', category: 'wildlife',
       image: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&q=80',
-      description: 'Bwindi Impenetrable Forest is a UNESCO World Heritage Site and home to nearly half of the world\'s remaining mountain gorillas. This ancient rainforest, with its mist-covered hills and dense vegetation, offers one of the most extraordinary wildlife experiences on Earth. Trek through the jungle with experienced guides to encounter these gentle giants in their natural habitat. Beyond gorillas, the forest hosts over 350 bird species, 120 mammals, and countless butterflies and plants.',
-      duration: '3-5 Days',
-      highlights: ['Mountain Gorilla Trekking', 'Bird Watching', 'Nature Walks', 'Batwa Cultural Experience']
+      description: 'Home to nearly half the world\'s remaining mountain gorillas, Bwindi is a UNESCO World Heritage Site draped in ancient mist-covered rainforest. Trek with expert guides to encounter these gentle giants, while 350+ bird species and rich Batwa culture complete an extraordinary experience.',
+      duration: '3–5 Days',
+      highlights: ['Mountain Gorilla Trekking', 'Bird Watching', 'Nature Walks', 'Batwa Cultural Experience'],
     },
     {
       id: 2,
       name: 'Masai Mara National Reserve',
-      country: 'Kenya',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1547970810-dc1e684a4a8d?w=800&q=80',
-      description: 'The Masai Mara is Kenya\'s most famous wildlife reserve, renowned for its exceptional population of lions, leopards, cheetahs, and the annual Great Migration. Between July and October, over 1.5 million wildebeest and hundreds of thousands of zebras cross the Mara River in one of nature\'s most spectacular events. The reserve\'s rolling grasslands and acacia-dotted plains provide the perfect backdrop for game drives, where you can witness the Big Five and immerse yourself in Maasai culture.',
-      duration: '4-7 Days',
-      highlights: ['Great Wildebeest Migration', 'Big Five Safaris', 'Hot Air Balloon Rides', 'Maasai Village Visits']
+      country: 'Kenya', region: 'Africa', category: 'wildlife',
+      image: 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=800&q=80',
+      description: 'Kenya\'s most celebrated reserve, renowned for the annual Great Migration where 1.5 million wildebeest thunder across the Mara River. Big Five game drives, hot air balloon rides over golden plains, and authentic Maasai culture make this one of Earth\'s ultimate safari destinations.',
+      duration: '4–7 Days',
+      highlights: ['Great Wildebeest Migration', 'Big Five Safaris', 'Hot Air Balloon Rides', 'Maasai Village Visits'],
     },
     {
       id: 3,
       name: 'Serengeti National Park',
-      country: 'Tanzania',
-      category: 'wildlife',
+      country: 'Tanzania', region: 'Africa', category: 'wildlife',
       image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80',
-      description: 'Serengeti means "endless plains" in the Maasai language, and this UNESCO World Heritage Site lives up to its name. The park covers nearly 15,000 square kilometers of pristine savannah, home to the largest terrestrial mammal migration in the world. The Serengeti ecosystem supports diverse wildlife year-round, including massive herds of wildebeest, zebra, and gazelle, along with their predators - lions, cheetahs, leopards, and hyenas. The landscape varies from open grasslands to riverine forests and kopjes (rocky outcrops).',
-      duration: '5-8 Days',
-      highlights: ['Annual Wildlife Migration', 'Big Five Game Viewing', 'Balloon Safaris', 'Kopje Formations']
+      description: '"Endless plains" in Maasai — and this UNESCO site delivers. 15,000 sq km of pristine savannah support the world\'s greatest terrestrial mammal migration. Lions, cheetahs, leopards, and vast zebra herds roam a landscape that shifts from open grassland to riverine forest and dramatic kopjes.',
+      duration: '5–8 Days',
+      highlights: ['Annual Wildlife Migration', 'Big Five Game Viewing', 'Balloon Safaris', 'Kopje Rock Formations'],
     },
     {
       id: 4,
-      name: 'Volcanoes National Park',
-      country: 'Rwanda',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1535262412227-95c06e741c08?w=800&q=80',
-      description: 'Nestled in the Virunga Mountains, Volcanoes National Park is Rwanda\'s premier destination for mountain gorilla trekking. The park protects the Rwandan section of the Virunga mountain range, which spans three countries. Beyond gorillas, the park is home to the rare golden monkeys, diverse bird species, and five volcanic peaks. The bamboo forests and afro-alpine vegetation create a mystical atmosphere. This park was also the base for Dian Fossey\'s groundbreaking gorilla research.',
-      duration: '3-4 Days',
-      highlights: ['Mountain Gorilla Encounters', 'Golden Monkey Tracking', 'Volcano Hiking', 'Dian Fossey Tomb Visit']
+      name: 'Zanzibar Archipelago',
+      country: 'Tanzania', region: 'Africa', category: 'beach',
+      image: 'https://images.unsplash.com/photo-1505881502353-a1986add3762?w=800&q=80',
+      description: 'Pristine white sand beaches meet a UNESCO-listed Stone Town in this Indian Ocean jewel. Winding alleyways, Swahili architecture, world-class dive sites, and spice plantations weave African, Arab, and Indian influences into one unforgettable island escape.',
+      duration: '5–7 Days',
+      highlights: ['White Sand Beaches', 'Stone Town Heritage', 'Spice Farm Tours', 'Coral Reef Snorkeling'],
     },
     {
       id: 5,
-      name: 'Zanzibar Archipelago',
-      country: 'Tanzania',
-      category: 'beach',
-      image: 'https://images.unsplash.com/photo-1505881502353-a1986add3762?w=800&q=80',
-      description: 'Zanzibar is an archipelago off the coast of Tanzania, famous for its pristine white sand beaches, crystal-clear turquoise waters, and rich cultural heritage. Stone Town, the historic heart of Zanzibar City, is a UNESCO World Heritage Site with winding alleyways, bustling bazaars, and stunning Swahili architecture. The islands offer world-class diving and snorkeling, spice plantations to explore, and a fascinating blend of African, Arab, and Indian influences that have shaped its unique culture and cuisine.',
-      duration: '5-7 Days',
-      highlights: ['White Sand Beaches', 'Stone Town Heritage', 'Spice Farm Tours', 'Coral Reef Snorkeling']
+      name: 'Mount Kilimanjaro',
+      country: 'Tanzania', region: 'Africa', category: 'adventure',
+      image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50b0?w=800&q=80',
+      description: 'Africa\'s highest peak at 5,895m — and no technical climbing required. Trek through five distinct climate zones, from lush rainforest to arctic summit, along the famous Machame or Marangu routes. Standing on Uhuru Peak at sunrise is a life-defining moment.',
+      duration: '7–10 Days',
+      highlights: ['Summit Uhuru Peak', 'Five Climate Zones', 'Glaciers & Ice Fields', 'Sunrise from the Roof of Africa'],
     },
     {
       id: 6,
-      name: 'Mount Kilimanjaro',
-      country: 'Tanzania',
-      category: 'adventure',
-      image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50b0?w=800&q=80',
-      description: 'Mount Kilimanjaro, Africa\'s highest peak at 5,895 meters, is a dormant volcano offering one of the world\'s most accessible high-altitude climbs. No technical climbing skills are required, making it possible for determined trekkers to reach the summit. The mountain features five distinct climate zones - from tropical rainforest at the base to arctic conditions at the peak. Several routes are available, including the popular Machame and Marangu routes, each offering unique perspectives of this majestic mountain.',
-      duration: '7-10 Days',
-      highlights: ['Summit Uhuru Peak', 'Five Climate Zones', 'Glaciers and Ice Fields', 'Sunrise from the Roof of Africa']
+      name: 'Murchison Falls',
+      country: 'Uganda', region: 'Africa', category: 'wildlife',
+      image: '/images/murchison-falls-view.jpg',
+      description: 'Where the Nile forces itself through a 7-metre gap with thunderous force. Uganda\'s largest national park offers game drives for the Big Five, Nile boat cruises past hippos and crocodiles, and the dramatic hike to the top of the falls itself.',
+      duration: '3–5 Days',
+      highlights: ['Nile Boat Cruise', 'Big Five Game Drives', 'Top of the Falls Hike', 'Shoebill Spotting'],
     },
     {
       id: 7,
-      name: 'Lake Victoria',
-      country: 'Uganda',
-      category: 'nature',
-      image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
-      description: 'Lake Victoria is Africa\'s largest lake and the world\'s second-largest freshwater lake by surface area. Shared by Uganda, Kenya, and Tanzania, it\'s the source of the White Nile and supports millions of people. The Ugandan shores offer peaceful fishing villages, beautiful islands like the Ssese Islands, and incredible birdwatching opportunities. Experience traditional fishing methods, explore lush tropical islands, and enjoy stunning sunsets over the vast expanse of water that feels more like an inland sea.',
-      duration: '2-4 Days',
-      highlights: ['Ssese Islands', 'Sport Fishing', 'Bird Watching', 'Traditional Fishing Villages']
+      name: 'Kidepo Valley National Park',
+      country: 'Uganda', region: 'Africa', category: 'wildlife',
+      image: 'https://images.unsplash.com/photo-1667817418453-3489bb60ce9b?w=1920&auto=format&fit=crop&q=80',
+      description: 'Uganda\'s most remote and rewarding park — a true wilderness between the borders of Sudan and Kenya. Dramatic semi-arid valleys, mountains, and open savannah shelter lions, elephants, cheetahs, and ostriches found nowhere else in the country. Pure, unspoiled Africa.',
+      duration: '3–5 Days',
+      highlights: ['Remote Wilderness', 'Unique Wildlife Species', 'Karamojong Culture', 'Dramatic Landscapes'],
     },
     {
       id: 8,
-      name: 'Jinja - Source of the Nile',
-      country: 'Uganda',
-      category: 'adventure',
-      image: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80',
-      description: 'Jinja, known as the adventure capital of East Africa, sits at the source of the mighty Nile River. The town offers world-class white water rafting on the Nile\'s Grade 5 rapids, bungee jumping from a 44-meter platform, kayaking, stand-up paddleboarding, and river boarding. Beyond adrenaline activities, visit the actual source of the Nile at Jinja, enjoy sunset cruises, explore local markets, and experience the vibrant energy of this riverside town that has become a hub for adventure seekers.',
-      duration: '2-3 Days',
-      highlights: ['White Water Rafting', 'Bungee Jumping', 'Source of the Nile', 'Kayaking Adventures']
+      name: 'Lake Bunyonyi',
+      country: 'Uganda', region: 'Africa', category: 'nature',
+      image: '/images/lake-bunyonyi.avif',
+      description: 'Often called Africa\'s most beautiful lake, Lake Bunyonyi sits at 1,962m surrounded by terraced hills and dotted with 29 islands. Canoe between islands, swim in safe bilharzia-free waters, and soak in the serenity of one of Uganda\'s most underrated gems.',
+      duration: '2–3 Days',
+      highlights: ['Island Hopping', 'Canoeing', 'Birdwatching', 'Hill Terraces Views'],
     },
     {
       id: 9,
-      name: 'Ngorongoro Crater',
-      country: 'Tanzania',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=800&q=80',
-      description: 'The Ngorongoro Crater is the world\'s largest intact volcanic caldera, formed millions of years ago when a massive volcano exploded and collapsed. The crater floor, 600 meters below the rim, is home to an estimated 25,000 large animals including the Big Five. This unique ecosystem is a haven for wildlife, with permanent water sources and rich grazing lands supporting dense populations of predators and prey. The crater walls create a natural enclosure, making it one of the best places in Africa to see wildlife.',
-      duration: '2-3 Days',
-      highlights: ['Crater Floor Safari', 'Big Five in One Day', 'Flamingos at Lake Magadi', 'Olduvai Gorge']
+      name: 'Rwenzori Mountains',
+      country: 'Uganda', region: 'Africa', category: 'adventure',
+      image: '/images/mountain-climbing.avif',
+      description: 'The legendary "Mountains of the Moon" — Africa\'s third highest peak and the continent\'s last equatorial glaciers. Trek through giant lobelias, heather moorlands, and glacial lakes in this UNESCO site. One of Africa\'s most challenging and visually surreal trekking experiences.',
+      duration: '7–10 Days',
+      highlights: ['Margherita Peak Summit', 'Equatorial Glaciers', 'Alpine Lakes', 'Unique Afro-Alpine Flora'],
     },
     {
       id: 10,
-      name: 'Lake Nakuru National Park',
-      country: 'Kenya',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1551316679-9c6ae9dec224?w=800&q=80',
-      description: 'Lake Nakuru National Park is a haven for bird lovers and wildlife enthusiasts. While famous for its massive flocks of pink flamingos that create a stunning spectacle along the lake shores, the park is also a rhino sanctuary protecting both black and white rhinos. The park\'s varied habitats - from lake waters to surrounding woodland and grassland - support over 450 bird species and diverse mammals including lions, leopards, buffalo, and endangered Rothschild giraffes.',
-      duration: '2-3 Days',
-      highlights: ['Pink Flamingo Flocks', 'Rhino Sanctuary', '450+ Bird Species', 'Rothschild Giraffes']
+      name: 'Ngorongoro Crater',
+      country: 'Tanzania', region: 'Africa', category: 'wildlife',
+      image: 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=800&q=80',
+      description: 'The world\'s largest intact volcanic caldera — a natural enclosure supporting 25,000 large animals including the Big Five. Permanent water sources and rich grazing on the crater floor make it possible to see more wildlife in a single day here than almost anywhere on Earth.',
+      duration: '2–3 Days',
+      highlights: ['Crater Floor Safari', 'Big Five in One Day', 'Flamingos at Lake Magadi', 'Olduvai Gorge'],
     },
+
+    // ── Asia ──
     {
       id: 11,
-      name: 'Kidepo Valley National Park',
-      country: 'Uganda',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1535338623465-c1aa3b671af7?w=800&q=80',
-      description: 'Kidepo Valley National Park is Uganda\'s most remote and least visited park, offering a true wilderness experience. Located in the rugged, semi-arid valleys between Uganda\'s borders with Sudan and Kenya, the park boasts spectacular scenery with mountains, valleys, and vast open savannah. Wildlife includes lions, elephants, buffalo, and unique species like cheetahs, ostriches, and bat-eared foxes found nowhere else in Uganda. The isolation adds to its appeal for adventurous travelers.',
-      duration: '3-5 Days',
-      highlights: ['Remote Wilderness', 'Unique Wildlife Species', 'Karamojong Culture', 'Dramatic Landscapes']
+      name: 'Beijing & the Great Wall',
+      country: 'China', region: 'Asia', category: 'cultural',
+      image: '/images/IMG_20230828_131906.jpg',
+      description: 'One of humanity\'s greatest achievements stretches across misty mountains above one of the world\'s most dynamic capitals. Walk the ancient ramparts, explore the Forbidden City\'s imperial grandeur, and wander Hutong alleyways where Beijing\'s traditional soul still breathes.',
+      duration: '6–9 Days',
+      highlights: ['Great Wall of China', 'Temple of Heaven', 'Forbidden City', 'Traditional Hutong Culture'],
     },
     {
       id: 12,
-      name: 'Mombasa Beaches',
-      country: 'Kenya',
-      category: 'beach',
-      image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
-      description: 'Mombasa, Kenya\'s coastal jewel, offers pristine white sand beaches along the Indian Ocean, rich Swahili culture, and historic sites. The beaches - including Diani, Nyali, and Bamburi - feature coral reefs perfect for snorkeling and diving. Fort Jesus, a UNESCO World Heritage Site, tells the story of the region\'s colonial past. The Old Town\'s narrow streets reveal centuries of Arab, Portuguese, and British influence. Enjoy fresh seafood, water sports, and the warm hospitality of the coast.',
-      duration: '4-7 Days',
-      highlights: ['Diani Beach Paradise', 'Marine Parks', 'Fort Jesus', 'Old Town Exploration']
+      name: 'Phuket & Phi Phi Islands',
+      country: 'Thailand', region: 'Asia', category: 'beach',
+      image: '/images/Snapchat-740087849.jpg',
+      description: 'Thailand\'s jewel of the Andaman Sea — from the vibrant beach clubs of Patong to the serene limestone cliffs of Phi Phi. Island-hop by longboat, dive crystal waters, conquer jungle ATV trails, and lose yourself in night markets and street food that define Southeast Asia.',
+      duration: '6–9 Days',
+      highlights: ['Phi Phi Islands Cruise', 'ATV Jungle Adventure', 'Thai Cooking Class', 'Snorkeling & Diving'],
     },
+
+    // ── Middle East ──
     {
       id: 13,
-      name: 'Rwenzori Mountains',
-      country: 'Uganda',
-      category: 'adventure',
-      image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
-      description: 'The Rwenzori Mountains, known as the "Mountains of the Moon," offer some of Africa\'s most challenging and rewarding trekking experiences. This UNESCO World Heritage Site features Africa\'s third highest peak, Margherita, at 5,109 meters. The mountains showcase unique afro-alpine vegetation, glacial lakes, and the last equatorial glaciers in Africa. Trek through multiple vegetation zones from tropical rainforest to snow and ice, encountering giant lobelias, heathers, and groundsels along the way.',
-      duration: '7-10 Days',
-      highlights: ['Margherita Peak Summit', 'Equatorial Glaciers', 'Alpine Lakes', 'Unique Flora']
+      name: 'Dubai',
+      country: 'UAE', region: 'Middle East', category: 'luxury',
+      image: '/images/Snapchat-1906972103.jpg',
+      description: 'The future built in the desert — a dazzling skyline, world-record towers, and gold-trimmed malls alongside ancient souks and camel-trodden dunes. Dune-bash at sunset, sail the Marina, and dine above the clouds in one of the world\'s most audacious cities.',
+      duration: '4–6 Days',
+      highlights: ['Burj Khalifa', 'Desert Safari & Dune Bashing', 'Dubai Marina', 'Gold & Spice Souks'],
     },
+
+    // ── Europe & Asia ──
     {
       id: 14,
-      name: 'Lake Kivu',
-      country: 'Rwanda',
-      category: 'nature',
-      image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80',
-      description: 'Lake Kivu, one of Africa\'s Great Lakes, offers serene beauty with its sparkling waters surrounded by steep green hills. The lake forms part of Rwanda\'s western border with the Democratic Republic of Congo. Towns like Gisenyi and Kibuye provide beach resorts, water sports, and stunning sunsets. The lake is unique as one of three known "exploding lakes," though it poses no danger to visitors. Explore coffee plantations, kayak to islands, and enjoy the peaceful atmosphere of this highland lake.',
-      duration: '3-5 Days',
-      highlights: ['Beach Relaxation', 'Island Hopping', 'Coffee Plantation Tours', 'Water Sports']
+      name: 'Istanbul',
+      country: 'Turkey', region: 'Europe & Asia', category: 'cultural',
+      image: '/images/Snapchat-783147270.jpg',
+      description: 'The only city that straddles two continents — where minarets pierce the sky above a bazaar that has traded spices for 550 years. Hagia Sophia, the Blue Mosque, and a Bosphorus at sunset blending Europe and Asia into an unrepeatable crossroads of civilisation.',
+      duration: '4–6 Days',
+      highlights: ['Hagia Sophia', 'Grand Bazaar', 'Bosphorus Cruise', 'Turkish Cuisine Tour'],
     },
-    {
-      id: 15,
-      name: 'Amboseli National Park',
-      country: 'Kenya',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=800&q=80',
-      description: 'Amboseli National Park is famous for its large elephant herds and spectacular views of Mount Kilimanjaro, Africa\'s highest peak. The park\'s varied landscape includes dried-up lake beds, wetlands fed by underground springs, savannah, and woodlands. This diversity supports abundant wildlife including lions, cheetahs, buffalo, zebras, and over 400 bird species. The elephants of Amboseli are among the most photographed in the world, often seen with Kilimanjaro\'s snow-capped peak in the background.',
-      duration: '2-3 Days',
-      highlights: ['Kilimanjaro Views', 'Large Elephant Herds', 'Observation Hill', 'Maasai Community']
-    },
-    {
-      id: 16,
-      name: 'Queen Elizabeth National Park',
-      country: 'Uganda',
-      category: 'wildlife',
-      image: 'https://images.unsplash.com/photo-1551316679-9c6ae9dec224?w=800&q=80',
-      description: 'Queen Elizabeth National Park is Uganda\'s most popular savannah reserve, famous for its tree-climbing lions in the Ishasha sector and boat cruises on the Kazinga Channel. The channel connects Lake Edward and Lake George and hosts one of the greatest concentrations of hippos in Africa, along with massive Nile crocodiles. The park\'s diverse ecosystems include sprawling savannah, humid forests, sparkling lakes, and fertile wetlands, supporting 95 mammal species and over 600 bird species.',
-      duration: '3-4 Days',
-      highlights: ['Tree-climbing Lions', 'Kazinga Channel Cruise', 'Chimp Tracking', 'Crater Lakes']
-    }
   ];
 
   const categories = [
-    { id: 'all', name: 'All Destinations', icon: MapPin },
-    { id: 'wildlife', name: 'Wildlife & Safari', icon: Camera },
+    { id: 'all', name: 'All', icon: Globe },
+    { id: 'wildlife', name: 'Wildlife', icon: Camera },
     { id: 'adventure', name: 'Adventure', icon: Mountain },
-    { id: 'beach', name: 'Beach & Islands', icon: Waves },
-    { id: 'nature', name: 'Nature & Lakes', icon: TreePine }
+    { id: 'beach', name: 'Beach', icon: Waves },
+    { id: 'nature', name: 'Nature', icon: TreePine },
+    { id: 'cultural', name: 'Cultural', icon: MapPin },
+    { id: 'luxury', name: 'Luxury', icon: MapPin },
   ];
 
-  const countries = [
-    { id: 'all', name: 'All Countries' },
-    { id: 'Uganda', name: 'Uganda' },
-    { id: 'Kenya', name: 'Kenya' },
-    { id: 'Tanzania', name: 'Tanzania' },
-    { id: 'Rwanda', name: 'Rwanda' }
+  const regions = [
+    { id: 'all', name: 'All Regions' },
+    { id: 'Africa', name: 'Africa' },
+    { id: 'Asia', name: 'Asia' },
+    { id: 'Middle East', name: 'Middle East' },
+    { id: 'Europe & Asia', name: 'Europe & Asia' },
   ];
 
-  // Filter destinations
-  const filteredDestinations = allDestinations.filter(dest => {
-    const matchesSearch = dest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         dest.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || dest.category === selectedCategory;
-    const matchesCountry = selectedCountry === 'all' || dest.country === selectedCountry;
-    
-    return matchesSearch && matchesCategory && matchesCountry;
+  const filtered = allDestinations.filter(d => {
+    const matchSearch = d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      d.country.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchCat = selectedCategory === 'all' || d.category === selectedCategory;
+    const matchRegion = selectedRegion === 'all' || d.region === selectedRegion;
+    return matchSearch && matchCat && matchRegion;
   });
 
-  // Get visible destinations
-  const visibleDestinations = filteredDestinations.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredDestinations.length;
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
-  // Load more function
   const loadMore = () => {
     setIsLoading(true);
     setTimeout(() => {
-      setVisibleCount(prev => Math.min(prev + 4, filteredDestinations.length)); // Load 4 at a time
+      setVisibleCount(n => Math.min(n + 4, filtered.length));
       setIsLoading(false);
-    }, 600); // Reduced timeout
+    }, 500);
   };
 
-  // Intersection Observer for infinite scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
-          loadMore();
-        }
-      },
+      entries => { if (entries[0].isIntersecting && hasMore && !isLoading) loadMore(); },
       { threshold: 0.5 }
     );
-
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
-    }
-
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
     return () => observer.disconnect();
   }, [hasMore, isLoading]);
 
-  // Reset visible count when filters change
   useEffect(() => {
-    setVisibleCount(4);
+    setVisibleCount(6);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [searchQuery, selectedCategory, selectedCountry]);
+  }, [searchQuery, selectedCategory, selectedRegion]);
+
+  useEffect(() => {
+    setVisibleIds(new Set());
+    visible.forEach((d, i) => {
+      setTimeout(() => setVisibleIds(prev => new Set([...prev, d.id])), i * 70);
+    });
+  }, [visibleCount, selectedCategory, selectedRegion, searchQuery]);
+
+  const FilterBtn = ({ active, onClick, children }) => (
+    <button onClick={onClick}
+      className="flex-shrink-0 px-4 py-2 rounded-full text-xs tracking-widest uppercase transition-all duration-300"
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        color: active ? '#0a0a0f' : 'rgba(255,255,255,0.55)',
+        background: active ? 'linear-gradient(135deg, #b8975a, #d4af6e)' : 'rgba(255,255,255,0.06)',
+        boxShadow: active ? '0 2px 16px rgba(184,151,90,0.35)' : 'none',
+        border: active ? 'none' : '1px solid rgba(255,255,255,0.1)',
+      }}>
+      {children}
+    </button>
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 via-white to-amber-50">
-      {/* Hero Section with Optimized Image */}
-      <div className="relative overflow-hidden h-[400px] sm:h-[500px] md:h-[600px]">
-        {/* Optimized Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920&q=80&auto=format&fit=crop"
-            alt="East African Safari"
-            className="w-full h-full object-cover"
-            loading="eager"
-          />
+    <div className="min-h-screen" style={{ background: '#0a0a0f' }}>
+
+      {/* ── HERO ── */}
+      <section className="relative" style={{ height: '62vh', minHeight: 420 }}>
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80"
+          alt="World destinations" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0a0a0f]" />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: '200px' }} />
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center" style={{ paddingTop: 80 }}>
+          <span className="inline-block px-4 py-2 rounded-full border text-xs tracking-widest uppercase mb-5"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a', borderColor: 'rgba(184,151,90,0.3)', background: 'rgba(184,151,90,0.08)' }}>
+            Explore the World
+          </span>
+          <h1 className="text-white leading-none mb-4"
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(42px, 7vw, 86px)', letterSpacing: '-0.02em' }}>
+            Our <span className="italic" style={{ color: '#c9e89d' }}>Destinations</span>
+          </h1>
+          <div className="mb-5" style={{ width: 56, height: 2, background: 'linear-gradient(90deg, transparent, #b8975a, transparent)' }} />
+          <p className="text-white/60 max-w-xl mb-8" style={{ fontFamily: "'Crimson Text', serif", fontSize: 18 }}>
+            From the savannahs of Africa to the temples of Asia — {allDestinations.length} extraordinary places to discover
+          </p>
+          <div className="w-full max-w-lg relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search destinations or countries..."
+              className="w-full pl-11 pr-4 py-3.5 rounded-full text-sm text-gray-900 focus:ring-2 focus:ring-amber-400 focus:outline-none shadow-2xl"
+              style={{ fontFamily: "'Montserrat', sans-serif" }} />
+          </div>
         </div>
-        
-        {/* Dark Overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+      </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-          <div className="text-center w-full">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-4 sm:mb-6">
-              <MapPin className="w-4 h-4 text-amber-200" />
-              <span className="text-amber-100 text-sm font-medium tracking-wide">
-                Explore East Africa
-              </span>
-            </div>
-            
-            <h1 
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight px-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Discover Amazing Destinations
-            </h1>
-            
-            <p 
-              className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto mb-6 sm:mb-10 px-4"
-              style={{ fontFamily: "'Crimson Text', serif" }}
-            >
-              From wildlife safaris to pristine beaches, adventure peaks to serene lakes - 
-              explore the best of Uganda, Kenya, Tanzania, and Rwanda
-            </p>
-
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto px-4">
-              <div className="relative">
-                <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search destinations..."
-                  className="w-full pl-11 sm:pl-14 pr-4 sm:pr-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base text-gray-900 bg-white/95 backdrop-blur-sm shadow-xl focus:ring-2 focus:ring-amber-400 focus:outline-none transition-all"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                />
-              </div>
-            </div>
+      {/* ── FILTER RAIL ── */}
+      <div className="sticky top-0 z-20"
+        style={{ background: 'rgba(10,10,15,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 space-y-2">
+          <div className="flex items-center gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+            <span className="text-white/30 text-[10px] tracking-widest uppercase flex-shrink-0 mr-1" style={{ fontFamily: "'Montserrat', sans-serif" }}>Type</span>
+            {categories.map(c => (
+              <FilterBtn key={c.id} active={selectedCategory === c.id} onClick={() => setSelectedCategory(c.id)}>{c.name}</FilterBtn>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+            <span className="text-white/30 text-[10px] tracking-widest uppercase flex-shrink-0 mr-1" style={{ fontFamily: "'Montserrat', sans-serif" }}>Region</span>
+            {regions.map(r => (
+              <FilterBtn key={r.id} active={selectedRegion === r.id} onClick={() => setSelectedRegion(r.id)}>{r.name}</FilterBtn>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12">
-        {/* Filters Section */}
-        <div className="mb-12">
-          {/* Category Filters */}
+      {/* ── DESTINATIONS LIST ── */}
+      <section className="relative py-12 sm:py-16">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{ width: 700, height: 400, background: 'radial-gradient(ellipse, rgba(184,151,90,0.05) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+
+          {/* Count */}
           <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Filter className="w-5 h-5 text-amber-700" />
-              <h3 
-                className="text-lg font-bold text-gray-900"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Filter by Category
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {categories.map((category) => {
-                const Icon = category.icon;
-                const isActive = selectedCategory === category.id;
-                return (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`group flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                      isActive
-                        ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-xl scale-105'
-                        : 'bg-white text-gray-700 hover:bg-amber-50 border-2 border-gray-200 hover:border-amber-300 shadow-md'
-                    }`}
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-amber-600'}`} />
-                    <span>{category.name}</span>
-                    {isActive && <Check className="w-4 h-4" />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Country Filters */}
-          <div>
-            <h3 
-              className="text-lg font-bold text-gray-900 mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Filter by Country
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {countries.map((country) => {
-                const isActive = selectedCountry === country.id;
-                return (
-                  <button
-                    key={country.id}
-                    onClick={() => setSelectedCountry(country.id)}
-                    className={`px-5 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                      isActive
-                        ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-xl scale-105'
-                        : 'bg-white text-gray-700 hover:bg-amber-50 border-2 border-gray-200 hover:border-amber-300 shadow-md'
-                    }`}
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {country.name}
-                    {isActive && <Check className="w-4 h-4 inline ml-2" />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Results Summary */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <p className="text-gray-600 text-lg">
-              Showing <span className="font-bold text-gray-900">{visibleDestinations.length}</span> of{' '}
-              <span className="font-bold text-gray-900">{filteredDestinations.length}</span> destinations
+            <p className="text-white/40 text-sm" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+              Showing <span className="text-white font-semibold">{visible.length}</span> of{' '}
+              <span className="text-white font-semibold">{filtered.length}</span> destinations
             </p>
           </div>
-          {filteredDestinations.length > 0 && (
-            <div className="text-sm text-gray-500">
-              {hasMore && `${filteredDestinations.length - visibleCount} more to explore`}
+
+          {filtered.length === 0 ? (
+            <div className="text-center py-24">
+              <p className="text-white/40 text-2xl mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>No destinations match your filters</p>
+              <button onClick={() => { setSearchQuery(''); setSelectedCategory('all'); setSelectedRegion('all'); }}
+                className="px-6 py-3 rounded-full text-sm font-semibold text-[#0a0a0f]"
+                style={{ background: 'linear-gradient(135deg, #b8975a, #d4af6e)', fontFamily: "'Montserrat', sans-serif" }}>
+                Clear Filters
+              </button>
             </div>
-          )}
-        </div>
+          ) : (
+            <div className="space-y-6">
+              {visible.map((dest, idx) => {
+                const isVis = visibleIds.has(dest.id);
+                return (
+                  <div key={dest.id}
+                    style={{
+                      borderRadius: 16,
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      overflow: 'hidden',
+                      opacity: isVis ? 1 : 0,
+                      transform: isVis ? 'translateY(0)' : 'translateY(16px)',
+                      transition: `opacity 0.5s ease ${(idx % 6) * 0.07}s, transform 0.5s ease ${(idx % 6) * 0.07}s`,
+                    }}>
+                    <div className="grid md:grid-cols-5">
 
-        {/* Destinations Grid */}
-        {filteredDestinations.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <MapPin className="w-12 h-12 text-amber-600" />
-            </div>
-            <h3 
-              className="text-3xl font-bold text-gray-900 mb-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              No destinations found
-            </h3>
-            <p className="text-gray-600 mb-8 text-lg">
-              Try adjusting your filters or search query
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('all');
-                setSelectedCountry('all');
-              }}
-              className="px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold rounded-xl transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
-            >
-              Clear All Filters
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="space-y-8">
-              {visibleDestinations.map((destination, index) => (
-                <div
-                  key={destination.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500"
-                  style={{
-                    animation: `fadeIn 0.6s ease-out ${index * 0.1}s both`
-                  }}
-                >
-                  <div className="grid md:grid-cols-5 gap-6">
-                    {/* Image Section */}
-                    <div className="md:col-span-2 relative h-64 md:h-auto min-h-[280px] overflow-hidden">
-                      <img
-                        src={destination.image}
-                        alt={destination.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      
-                      {/* Country Badge */}
-                      <div className="absolute top-4 left-4 px-4 py-1.5 bg-white/95 backdrop-blur-sm text-amber-900 text-sm font-bold uppercase rounded-lg shadow-lg">
-                        {destination.country}
-                      </div>
-                    </div>
-
-                    {/* Content Section */}
-                    <div className="md:col-span-3 p-6 md:p-8">
-                      <div className="flex items-start justify-between mb-3">
-                        <h3 
-                          className="text-2xl md:text-3xl font-bold text-gray-900"
-                          style={{ fontFamily: "'Playfair Display', serif" }}
-                        >
-                          {destination.name}
-                        </h3>
+                      {/* Image */}
+                      <div className="md:col-span-2 relative overflow-hidden" style={{ minHeight: 260 }}>
+                        <img src={dest.image} alt={dest.name}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                          loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30 md:to-[#111111]/60" />
+                        {/* Country + region badges */}
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                          <span className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
+                            style={{ fontFamily: "'Montserrat', sans-serif", background: 'rgba(10,10,15,0.65)', backdropFilter: 'blur(6px)', color: '#d4af6e', border: '1px solid rgba(212,175,110,0.3)' }}>
+                            {dest.country}
+                          </span>
+                          <span className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-widest"
+                            style={{ fontFamily: "'Montserrat', sans-serif", background: 'rgba(10,10,15,0.55)', backdropFilter: 'blur(6px)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                            {dest.region}
+                          </span>
+                        </div>
+                        {/* Duration badge bottom */}
+                        <div className="absolute bottom-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+                          style={{ background: 'rgba(10,10,15,0.65)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          <Clock className="w-3 h-3" style={{ color: '#b8975a' }} />
+                          <span className="text-white/70 text-xs" style={{ fontFamily: "'Montserrat', sans-serif" }}>{dest.duration}</span>
+                        </div>
                       </div>
 
-                      <p 
-                        className="text-gray-700 mb-5 leading-relaxed text-base"
-                        style={{ fontFamily: "'Crimson Text', serif" }}
-                      >
-                        {destination.description}
-                      </p>
+                      {/* Content */}
+                      <div className="md:col-span-3 p-6 md:p-8 flex flex-col justify-between">
+                        <div>
+                          <h3 className="text-white font-bold mb-3 leading-tight"
+                            style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(20px, 2.5vw, 28px)' }}>
+                            {dest.name}
+                          </h3>
+                          <p className="mb-5 leading-relaxed"
+                            style={{ fontFamily: "'Crimson Text', serif", fontSize: 17, color: 'rgba(255,255,255,0.65)' }}>
+                            {dest.description}
+                          </p>
 
-                      {/* Duration */}
-                      <div className="flex items-center gap-2 mb-4 text-gray-600">
-                        <Clock className="w-5 h-5 text-amber-600" />
-                        <span className="font-medium">{destination.duration}</span>
-                      </div>
+                          {/* Highlights */}
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {dest.highlights.map((h, i) => (
+                              <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs"
+                                style={{
+                                  fontFamily: "'Montserrat', sans-serif",
+                                  background: 'rgba(184,151,90,0.1)',
+                                  color: '#d4af6e',
+                                  border: '1px solid rgba(184,151,90,0.2)',
+                                }}>
+                                <Check className="w-3 h-3" />
+                                {h}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
 
-                      {/* Highlights */}
-                      <div>
-                        <h4 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wide">
-                          Key Highlights
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {destination.highlights.map((highlight, idx) => (
-                            <span
-                              key={idx}
-                              className="px-3 py-1.5 bg-amber-50 text-amber-800 text-sm font-medium rounded-lg border border-amber-200"
-                            >
-                              {highlight}
-                            </span>
-                          ))}
+                        {/* CTA */}
+                        <div className="flex items-center gap-3">
+                          <Link to="/booking"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 group"
+                            style={{ background: 'linear-gradient(135deg, #b8975a, #d4af6e)', color: '#0a0a0f', fontFamily: "'Montserrat', sans-serif" }}>
+                            Book Now
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </Link>
+                          <Link to="/packages"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300"
+                            style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.1)', fontFamily: "'Montserrat', sans-serif" }}>
+                            View Packages
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
+                );
+              })}
+
+              {/* Load more */}
+              {hasMore && (
+                <div ref={loadMoreRef} className="pt-8 text-center">
+                  {isLoading ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <Loader className="w-8 h-8 animate-spin" style={{ color: '#b8975a' }} />
+                      <p className="text-white/40 text-sm" style={{ fontFamily: "'Montserrat', sans-serif" }}>Loading more…</p>
+                    </div>
+                  ) : (
+                    <button onClick={loadMore}
+                      className="px-8 py-3.5 rounded-full font-semibold text-sm transition-all"
+                      style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.12)', fontFamily: "'Montserrat', sans-serif" }}>
+                      Load More Destinations
+                    </button>
+                  )}
                 </div>
-              ))}
+              )}
+
+              {!hasMore && filtered.length > 4 && (
+                <div className="pt-8 text-center">
+                  <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs"
+                    style={{ background: 'rgba(184,151,90,0.1)', color: '#b8975a', border: '1px solid rgba(184,151,90,0.2)', fontFamily: "'Montserrat', sans-serif" }}>
+                    <Check className="w-3.5 h-3.5" />
+                    All {filtered.length} destinations shown
+                  </span>
+                </div>
+              )}
             </div>
+          )}
+        </div>
+      </section>
 
-            {/* Load More Section */}
-            {hasMore && (
-              <div ref={loadMoreRef} className="mt-12 text-center">
-                {isLoading ? (
-                  <div className="flex flex-col items-center gap-4">
-                    <Loader className="w-12 h-12 text-amber-600 animate-spin" />
-                    <p className="text-gray-600 font-medium">Loading more destinations...</p>
-                  </div>
-                ) : (
-                  <button
-                    onClick={loadMore}
-                    className="px-8 py-4 bg-white hover:bg-amber-50 text-amber-700 font-bold rounded-xl transition-all shadow-lg hover:shadow-xl border-2 border-amber-200 hover:border-amber-400 transform hover:scale-105"
-                  >
-                    Load More Destinations
-                  </button>
-                )}
-              </div>
-            )}
-
-            {/* End of Results */}
-            {!hasMore && filteredDestinations.length > 4 && (
-              <div className="mt-12 text-center">
-                <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full">
-                  <Check className="w-5 h-5" />
-                  <span className="font-semibold">You've viewed all {filteredDestinations.length} destinations</span>
-                </div>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+      <style>{`::-webkit-scrollbar { display: none; }`}</style>
     </div>
   );
 };

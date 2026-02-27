@@ -20,28 +20,136 @@ const Destinations = () => {
   const destinationColumns = [
     {
       destinations: [
-        { id: 'bwindi', image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&q=80', title: 'Bwindi Impenetrable Forest', location: 'Southwestern Uganda', category: 'Gorilla Trekking', duration: '4 Days', groupSize: '4-8', description: 'Unforgettable mountain gorilla trekking and lush rainforest adventures' },
-        { id: 'murchison', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80', title: 'Murchison Falls NP', location: 'Northwestern Uganda', category: 'Safari & Waterfalls', duration: '3 Days', groupSize: '6-12', description: 'Thundering Nile waterfall and classic African safari experiences' },
-        { id: 'queen-elizabeth', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80', title: 'Queen Elizabeth NP', location: 'Western Uganda', category: 'Wildlife Safari', duration: '3 Days', groupSize: '6-14', description: 'Diverse ecosystems, boat cruises, and iconic wildlife sightings' },
-        { id: 'lake-bunyonyi', image: 'https://images.unsplash.com/photo-1611416517780-eff3a2f57b89?w=600&q=80', title: 'Lake Bunyonyi', location: 'Southwestern Uganda', category: 'Scenic Lake', duration: '2 Days', groupSize: '2-6', description: 'Serene lake with island hopping, swimming and beautiful views' },
+        {
+          id: 'bwindi',
+          image: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&q=80',
+          title: 'Bwindi Impenetrable Forest',
+          location: 'Uganda',
+          category: 'Wildlife',
+          duration: '3–5 Days',
+          groupSize: '4–8',
+          description: 'Home to nearly half the world\'s mountain gorillas. Trek ancient mist-covered rainforest with expert guides.'
+        },
+        {
+          id: 'masai-mara',
+          image: 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=600&q=80',
+          title: 'Masai Mara',
+          location: 'Kenya',
+          category: 'Wildlife',
+          duration: '4–7 Days',
+          groupSize: '6–12',
+          description: 'Witness the Great Migration — 1.5 million wildebeest crossing the Mara River in a breathtaking spectacle.'
+        },
+        {
+          id: 'zanzibar',
+          image: 'https://images.unsplash.com/photo-1505881502353-a1986add3762?w=600&q=80',
+          title: 'Zanzibar Archipelago',
+          location: 'Tanzania',
+          category: 'Beach',
+          duration: '5–7 Days',
+          groupSize: '2–6',
+          description: 'Pristine white sand beaches, UNESCO Stone Town, and world-class coral reef diving on the Indian Ocean.'
+        },
+        {
+          id: 'beijing',
+          image: '/images/IMG_20230828_131906.jpg',
+          title: 'Beijing & Great Wall',
+          location: 'China',
+          category: 'Cultural',
+          duration: '6–9 Days',
+          groupSize: '6–20',
+          description: 'Walk the ancient ramparts of the Great Wall and explore the imperial grandeur of the Forbidden City.'
+        },
       ],
       offset: 0
     },
     {
       destinations: [
-        { id: 'rwenzori', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80', title: 'Rwenzori Mountains', location: 'Western Uganda', category: 'Mountain Trek', duration: '7 Days', groupSize: '6-10', description: 'Hike the "Mountains of the Moon" with glaciers and waterfalls' },
-        { id: 'jinja', image: 'https://images.unsplash.com/photo-1624714463892-c0e3fe9b1eb1?w=600&q=80', title: 'Jinja & Source of Nile', location: 'Eastern Uganda', category: 'Adventure & River', duration: '2 Days', groupSize: '4-8', description: 'Adventure capital with white-water rafting and Nile views' },
-        { id: 'kibale', image: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80', title: 'Kibale Forest', location: 'Western Uganda', category: 'Chimpanzee Safari', duration: '3 Days', groupSize: '6-10', description: 'Chimpanzee tracking and rich primate biodiversity' },
-        { id: 'lake-victoria', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80', title: 'Lake Victoria', location: 'Central Uganda', category: 'Lakeside Leisure', duration: '2 Days', groupSize: '2-6', description: "Africa's largest lake with beaches, boat tours and birdlife" },
+        {
+          id: 'serengeti',
+          image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
+          title: 'Serengeti',
+          location: 'Tanzania',
+          category: 'Wildlife',
+          duration: '5–8 Days',
+          groupSize: '4–10',
+          description: 'Endless plains supporting the world\'s greatest terrestrial mammal migration. Lions, cheetahs, leopards, and vast zebra herds.'
+        },
+        {
+          id: 'murchison',
+          image: '/images/murchison-falls-view.jpg',
+          title: 'Murchison Falls',
+          location: 'Uganda',
+          category: 'Wildlife',
+          duration: '3–5 Days',
+          groupSize: '6–12',
+          description: 'The Nile forces through a 7-metre gap with thunderous power. Boat cruises past hippos and dramatic game drives.'
+        },
+        {
+          id: 'phuket',
+          image: '/images/Snapchat-740087849.jpg',
+          title: 'Phuket & Phi Phi',
+          location: 'Thailand',
+          category: 'Beach',
+          duration: '6–9 Days',
+          groupSize: '2–10',
+          description: 'Island-hop limestone cliffs, dive crystal waters, and lose yourself in vibrant Thai street food and night markets.'
+        },
+        {
+          id: 'rwenzori',
+          image: '/images/mountain-climbing.avif',
+          title: 'Rwenzori Mountains',
+          location: 'Uganda',
+          category: 'Adventure',
+          duration: '7–10 Days',
+          groupSize: '4–10',
+          description: 'Africa\'s last equatorial glaciers and third highest peak. Trek through giant lobelias and glacial alpine lakes.'
+        },
       ],
       offset: -160
     },
     {
       destinations: [
-        { id: 'kidepo', image: 'https://images.unsplash.com/photo-1484406566174-9da000fda645?w=600&q=80', title: 'Kidepo Valley NP', location: 'Northern Uganda', category: 'Remote Safari', duration: '4 Days', groupSize: '6-10', description: 'Wild, rugged landscapes and classic savannah wildlife' },
-        { id: 'entebbe', image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?w=600&q=80', title: 'Entebbe Botanical Gardens', location: 'Entebbe, Uganda', category: 'Nature & Birdwatching', duration: '1 Day', groupSize: '4-8', description: 'Explore tropical plant life, birds and lakeside scenery' },
-        { id: 'lake-mburo', image: 'https://images.pexels.com/photos/33045/animal-zebra-lake-blog-mburo.jpg?w=600&q=80', title: 'Lake Mburo NP', location: 'Western Uganda', category: 'Safari Getaway', duration: '2 Days', groupSize: '4-8', description: 'Easy safari with zebras, antelope, and birdlife' },
-        { id: 'kampala', image: 'https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=600&q=80', title: 'Kampala City', location: 'Central Uganda', category: 'Urban & Culture', duration: '2 Days', groupSize: '1-6', description: 'Experience lively markets, museums, and nightlife' },
+        {
+          id: 'kidepo',
+          image: 'https://images.unsplash.com/photo-1667817418453-3489bb60ce9b?w=1920&auto=format&fit=crop&q=80',
+          title: 'Kidepo Valley NP',
+          location: 'Uganda',
+          category: 'Safari',
+          duration: '3–5 Days',
+          groupSize: '4–10',
+          description: 'Uganda\'s most remote wilderness — dramatic savannah between the Sudan and Kenya borders. Pure, unspoiled Africa.'
+        },
+        {
+          id: 'dubai',
+          image: '/images/Snapchat-1906972103.jpg',
+          title: 'Dubai',
+          location: 'UAE',
+          category: 'Luxury',
+          duration: '4–6 Days',
+          groupSize: '2–12',
+          description: 'From desert dunes at sunset to sky-high infinity pools — the world\'s most audacious city never disappoints.'
+        },
+        {
+          id: 'kilimanjaro',
+          image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50b0?w=800&q=80',
+          title: 'Mount Kilimanjaro',
+          location: 'Tanzania',
+          category: 'Adventure',
+          duration: '7–10 Days',
+          groupSize: '6–12',
+          description: 'Africa\'s highest peak at 5,895m. No technical climbing needed — just determination and a great guide.'
+        },
+        {
+          id: 'lake-bunyonyi',
+          image: '/images/lake-bunyonyi.avif',
+          title: 'Lake Bunyonyi',
+          location: 'Uganda',
+          category: 'Nature',
+          duration: '2–3 Days',
+          groupSize: '2–6',
+          description: 'Often called Africa\'s most beautiful lake — 29 islands, terraced hills, and safe bilharzia-free swimming.'
+        },
       ],
       offset: -80
     }
@@ -85,9 +193,18 @@ const Destinations = () => {
     return (
       <section id="destinations" className="relative bg-[#0f0f1a] overflow-hidden py-16">
         <div className="px-4 sm:px-6 mb-8">
-          <span className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>Explore Uganda</span>
-          <h2 className="text-4xl sm:text-5xl text-white font-bold mb-4 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>Discover <br />Destinations</h2>
-          <p className="text-gray-400 text-base leading-relaxed max-w-lg" style={{ fontFamily: "'Crimson Text', serif" }}>Handpicked destinations from pristine beaches to majestic mountains</p>
+          <span className="inline-block px-4 py-2 bg-amber-600/10 border border-amber-600/30 text-amber-400 text-xs tracking-widest uppercase rounded-full mb-4"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            Explore the World
+          </span>
+          <h2 className="text-4xl sm:text-5xl text-white font-bold mb-4 leading-tight"
+            style={{ fontFamily: "'Playfair Display', serif" }}>
+            Discover <br />Destinations
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed max-w-lg"
+            style={{ fontFamily: "'Crimson Text', serif" }}>
+            From African safaris to Asian temples — handpicked destinations across the globe
+          </p>
         </div>
         <div className="overflow-x-auto scrollbar-hide px-4 sm:px-6">
           <div className="flex gap-3 pb-4">
@@ -96,10 +213,17 @@ const Destinations = () => {
                 <div className="relative rounded-lg overflow-hidden bg-[#1a1a1a] shadow-2xl" style={{ aspectRatio: '2/3' }}>
                   <img src={d.image} alt={d.title} className="w-full h-full object-cover" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                  <div className="absolute top-2 left-2"><span className="inline-block px-2 py-0.5 bg-amber-600/90 text-white text-[10px] font-semibold tracking-wide uppercase rounded-full">{d.category}</span></div>
+                  <div className="absolute top-2 left-2">
+                    <span className="inline-block px-2 py-0.5 bg-amber-600/90 text-white text-[10px] font-semibold tracking-wide uppercase rounded-full">
+                      {d.category}
+                    </span>
+                  </div>
                   <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                    <h4 className="text-white text-[13px] font-bold mb-0.5 leading-tight line-clamp-2" style={{ fontFamily: "'Playfair Display', serif" }}>{d.title}</h4>
-                    <div className="flex items-center gap-1 text-gray-400 text-[11px]"><MapPin className="w-2.5 h-2.5" /><span>{d.location}</span></div>
+                    <h4 className="text-white text-[13px] font-bold mb-0.5 leading-tight line-clamp-2"
+                      style={{ fontFamily: "'Playfair Display', serif" }}>{d.title}</h4>
+                    <div className="flex items-center gap-1 text-gray-400 text-[11px]">
+                      <MapPin className="w-2.5 h-2.5" /><span>{d.location}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -116,7 +240,7 @@ const Destinations = () => {
   return (
     <section id="destinations" className="relative overflow-hidden min-h-screen flex" style={{ background: BG }}>
 
-      {/* ── LEFT half: scrolling poster columns ── */}
+      {/* ── LEFT: scrolling poster columns ── */}
       <div className="relative flex-shrink-0" style={{ width: '50%' }}>
         <div className="flex h-screen">
           {destinationColumns.map((column, ci) => (
@@ -127,7 +251,6 @@ const Destinations = () => {
               onMouseEnter={() => pause(ci, true)}
               onMouseLeave={() => pause(ci, false)}
             >
-              {/* scrollable gutter */}
               <div
                 id={`scroll-col-${ci}`}
                 className="scrollbar-hide overflow-y-auto"
@@ -143,10 +266,18 @@ const Destinations = () => {
                         onMouseEnter={() => setHoveredCard(key)}
                         onMouseLeave={() => setHoveredCard(null)}
                         className="relative cursor-pointer"
-                        style={{ transition: 'transform 0.3s ease', transform: hov ? 'scale(1.04)' : 'scale(1)', zIndex: hov ? 20 : 1 }}
+                        style={{
+                          transition: 'transform 0.3s ease',
+                          transform: hov ? 'scale(1.04)' : 'scale(1)',
+                          zIndex: hov ? 20 : 1
+                        }}
                       >
                         {/* ambient glow */}
-                        <div className="absolute -inset-1 rounded-lg blur-xl transition-opacity duration-500" style={{ background: 'linear-gradient(135deg,rgba(245,158,11,0.28),rgba(139,92,246,0.08),rgba(59,130,246,0.18))', opacity: hov ? 0.55 : 0 }} />
+                        <div className="absolute -inset-1 rounded-lg blur-xl transition-opacity duration-500"
+                          style={{
+                            background: 'linear-gradient(135deg,rgba(184,151,90,0.3),rgba(201,232,157,0.08),rgba(184,151,90,0.15))',
+                            opacity: hov ? 0.6 : 0
+                          }} />
 
                         {/* poster card */}
                         <div
@@ -154,9 +285,11 @@ const Destinations = () => {
                           style={{
                             aspectRatio: '2 / 3',
                             background: '#111',
-                            boxShadow: hov ? '0 0 22px rgba(245,158,11,0.38),0 4px 14px rgba(0,0,0,0.6)' : '0 3px 14px rgba(0,0,0,0.5)',
+                            boxShadow: hov
+                              ? '0 0 22px rgba(184,151,90,0.4), 0 4px 14px rgba(0,0,0,0.6)'
+                              : '0 3px 14px rgba(0,0,0,0.5)',
                             transition: 'box-shadow 0.3s ease',
-                            border: hov ? '1px solid rgba(245,158,11,0.4)' : '1px solid transparent',
+                            border: hov ? '1px solid rgba(184,151,90,0.45)' : '1px solid transparent',
                           }}
                         >
                           <img
@@ -165,20 +298,30 @@ const Destinations = () => {
                             style={{ transition: 'transform 0.7s ease', transform: hov ? 'scale(1.07)' : 'scale(1)' }}
                             loading="lazy"
                           />
-                          {/* gradient scrim */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
 
-                          {/* category */}
+                          {/* category badge */}
                           <div className="absolute top-2 left-2">
-                            <span className="inline-block px-2 py-0.5 bg-amber-600/85 backdrop-blur-sm text-white text-[10px] font-semibold tracking-wide uppercase rounded-full">{d.category}</span>
+                            <span className="inline-block px-2 py-0.5 text-white text-[10px] font-semibold tracking-wide uppercase rounded-full"
+                              style={{ background: 'rgba(184,151,90,0.85)', backdropFilter: 'blur(4px)' }}>
+                              {d.category}
+                            </span>
                           </div>
 
-                          {/* hover detail */}
+                          {/* hover detail overlay */}
                           <div
                             className="absolute inset-0 flex flex-col items-center justify-center px-3"
-                            style={{ background: 'rgba(0,0,0,0.84)', backdropFilter: 'blur(3px)', opacity: hov ? 1 : 0, transition: 'opacity 0.28s ease' }}
+                            style={{
+                              background: 'rgba(0,0,0,0.84)',
+                              backdropFilter: 'blur(3px)',
+                              opacity: hov ? 1 : 0,
+                              transition: 'opacity 0.28s ease'
+                            }}
                           >
-                            <p className="text-white/82 text-[11px] text-center leading-relaxed mb-2" style={{ fontFamily: "'Crimson Text', serif" }}>{d.description}</p>
+                            <p className="text-white/80 text-[11px] text-center leading-relaxed mb-3"
+                              style={{ fontFamily: "'Crimson Text', serif" }}>
+                              {d.description}
+                            </p>
                             <div className="flex gap-3 text-white/50 text-[10px]">
                               <div className="flex items-center gap-1"><Clock className="w-2.5 h-2.5" /><span>{d.duration}</span></div>
                               <div className="flex items-center gap-1"><Users className="w-2.5 h-2.5" /><span>{d.groupSize}</span></div>
@@ -187,8 +330,14 @@ const Destinations = () => {
 
                           {/* title always visible */}
                           <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                            <h4 className="text-white text-[13px] font-bold leading-tight line-clamp-2" style={{ fontFamily: "'Playfair Display', serif" }}>{d.title}</h4>
-                            <div className="flex items-center gap-1 text-gray-400 text-[11px] mt-0.5"><MapPin className="w-2.5 h-2.5" /><span className="line-clamp-1">{d.location}</span></div>
+                            <h4 className="text-white text-[13px] font-bold leading-tight line-clamp-2"
+                              style={{ fontFamily: "'Playfair Display', serif" }}>
+                              {d.title}
+                            </h4>
+                            <div className="flex items-center gap-1 text-gray-400 text-[11px] mt-0.5">
+                              <MapPin className="w-2.5 h-2.5" />
+                              <span className="line-clamp-1">{d.location}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -197,51 +346,61 @@ const Destinations = () => {
                 </div>
               </div>
 
-              {/* ── TOP fade ── */}
-              <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].topGradH, zIndex: 10, background: `linear-gradient(to bottom, ${BG} 0%, rgba(15,15,26,0.75) 45%, rgba(15,15,26,0) 100%)` }} />
-              <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].topBlurH, zIndex: 11, WebkitBackdropFilter: `blur(${fadeConfig[ci].topBlur}px)`, backdropFilter: `blur(${fadeConfig[ci].topBlur}px)`, maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)' }} />
+              {/* TOP fade */}
+              <div className="absolute top-0 left-0 right-0 pointer-events-none"
+                style={{ height: fadeConfig[ci].topGradH, zIndex: 10, background: `linear-gradient(to bottom, ${BG} 0%, rgba(15,15,26,0.75) 45%, rgba(15,15,26,0) 100%)` }} />
+              <div className="absolute top-0 left-0 right-0 pointer-events-none"
+                style={{ height: fadeConfig[ci].topBlurH, zIndex: 11, WebkitBackdropFilter: `blur(${fadeConfig[ci].topBlur}px)`, backdropFilter: `blur(${fadeConfig[ci].topBlur}px)`, maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)' }} />
 
-              {/* ── BOTTOM fade ── */}
-              <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].botGradH, zIndex: 10, background: `linear-gradient(to top, ${BG} 0%, rgba(15,15,26,0.75) 45%, rgba(15,15,26,0) 100%)` }} />
-              <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: fadeConfig[ci].botBlurH, zIndex: 11, WebkitBackdropFilter: `blur(${fadeConfig[ci].botBlur}px)`, backdropFilter: `blur(${fadeConfig[ci].botBlur}px)`, maskImage: 'linear-gradient(to top, black 0%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 100%)' }} />
+              {/* BOTTOM fade */}
+              <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                style={{ height: fadeConfig[ci].botGradH, zIndex: 10, background: `linear-gradient(to top, ${BG} 0%, rgba(15,15,26,0.75) 45%, rgba(15,15,26,0) 100%)` }} />
+              <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                style={{ height: fadeConfig[ci].botBlurH, zIndex: 11, WebkitBackdropFilter: `blur(${fadeConfig[ci].botBlur}px)`, backdropFilter: `blur(${fadeConfig[ci].botBlur}px)`, maskImage: 'linear-gradient(to top, black 0%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 100%)' }} />
             </div>
           ))}
         </div>
 
-        {/* RIGHT-EDGE fade — bleeds columns into the text side */}
-        <div
-          className="absolute top-0 right-0 bottom-0 pointer-events-none"
-          style={{ width: 180, zIndex: 30, background: `linear-gradient(to right, transparent 0%, rgba(15,15,26,0.55) 35%, ${BG} 100%)` }}
-        />
+        {/* Right-edge fade into text panel */}
+        <div className="absolute top-0 right-0 bottom-0 pointer-events-none"
+          style={{ width: 180, zIndex: 30, background: `linear-gradient(to right, transparent 0%, rgba(15,15,26,0.55) 35%, ${BG} 100%)` }} />
       </div>
 
-      {/* ── RIGHT half: hero copy ── */}
+      {/* ── RIGHT: hero copy ── */}
       <div className="flex-1 flex items-center px-10 xl:px-16 2xl:px-24">
         <div className="max-w-lg">
-          <span className="inline-block text-[11px] tracking-widest uppercase text-gray-500 mb-5 font-medium" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            SCROLL
+          <span className="inline-block px-4 py-2 rounded-full border text-xs tracking-widest uppercase mb-6"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: '#b8975a', borderColor: 'rgba(184,151,90,0.3)', background: 'rgba(184,151,90,0.08)' }}>
+            Explore the World
           </span>
 
-          <h2 className="text-5xl xl:text-6xl text-white font-bold leading-[1.08] mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-5xl xl:text-6xl text-white font-bold leading-[1.08] mb-6"
+            style={{ fontFamily: "'Playfair Display', serif" }}>
             Unlimited<br />
             destinations,<br />
             <span style={{ color: '#c9e89d' }}>tours and<br />more.</span>
           </h2>
 
-          <p className="text-gray-500 text-base leading-relaxed mb-8" style={{ fontFamily: "'Crimson Text', serif" }}>
-            Discover handpicked destinations around the world. From pristine beaches to majestic mountains, ancient cultures to thrilling safaris.
+          <p className="text-gray-500 text-base leading-relaxed mb-8"
+            style={{ fontFamily: "'Crimson Text', serif" }}>
+            From the gorilla forests of Uganda to the temples of Beijing, desert dunes of Dubai to the beaches of Zanzibar — we take you everywhere that matters.
           </p>
 
-          <button className="px-7 py-3 bg-transparent hover:bg-white/6 text-white text-sm font-semibold rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300">
-            Contact Us
-          </button>
+          <a href="/destinations"
+            className="inline-block px-7 py-3 text-white text-sm font-semibold rounded-lg border transition-all duration-300"
+            style={{ fontFamily: "'Montserrat', sans-serif", borderColor: 'rgba(255,255,255,0.2)', background: 'transparent' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
+          >
+            View All Destinations
+          </a>
 
-          {/* stats */}
-          <div className="mt-14 pt-5 border-t border-white/8 flex gap-10">
-            {[['150+', 'Destinations'], ['50K+', 'Travelers'], ['500+', 'Tours']].map(([n, l]) => (
+          {/* Stats */}
+          <div className="mt-14 pt-5 flex gap-10" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            {[['14+', 'Destinations'], ['4', 'Continents'], ['100%', 'Personalised']].map(([n, l]) => (
               <div key={l}>
-                <div className="text-xl font-bold text-amber-400 mb-0.5" style={{ fontFamily: "'Playfair Display', serif" }}>{n}</div>
-                <div className="text-[10px] text-gray-600 uppercase tracking-widest">{l}</div>
+                <div className="text-xl font-bold mb-0.5" style={{ fontFamily: "'Playfair Display', serif", color: '#d4af6e' }}>{n}</div>
+                <div className="text-[10px] text-gray-600 uppercase tracking-widest" style={{ fontFamily: "'Montserrat', sans-serif" }}>{l}</div>
               </div>
             ))}
           </div>

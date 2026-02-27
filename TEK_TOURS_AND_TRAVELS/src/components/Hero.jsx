@@ -1,238 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ChevronLeft, ChevronRight, MapPin, Compass, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Hero = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const slides = [
-    {
-      image: 'https://media.istockphoto.com/id/2234874849/photo/a-wild-and-endangered-gorilla-in-the-bush.webp?s=1024x1024&w=is&k=20&c=e86pB22UY9xN88gprJrZm0qiN527vSltl-4-papeYeQ=',
-      title: 'Mountain Gorilla Trekking',
-      subtitle: 'Experience Uganda\'s most iconic wildlife encounter',
-      cta: 'Book Gorilla Trek'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1535082623926-b39352a03fb7?w=1920&auto=format&fit=crop&q=80',
-      title: 'Unforgettable Safari Adventures',
-      subtitle: 'Create memories that last a lifetime in the wild',
-      cta: 'Safari Packages'
-    },
-    {
-      image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/ab/2a/07/murchison-falls-view.jpg?w=1200&h=-1&s=1',
-      title: 'Murchison Falls Safari',
-      subtitle: 'Where the Nile thunders through dramatic gorges',
-      cta: 'Explore Murchison'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=1920&q=80&auto=format&fit=crop',
-      title: 'Chimpanzee Tracking',
-      subtitle: 'Encounter our closest relatives in Kibale Forest',
-      cta: 'Primate Tours'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1741850821428-01abc97866b3?w=1920&auto=format&fit=crop&q=80',
-      title: 'Safari Camping',
-      subtitle: 'Sleep under the stars in comfort and style',
-      cta: 'View Camps'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1551357140-c61c4f40224e?w=1920&auto=format&fit=crop&q=80',
-      title: 'Lake Bunyonyi Relaxation',
-      subtitle: 'Unwind on Africa\'s most scenic lake with 29 islands',
-      cta: 'Lake Retreats'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1621414050946-1b936a78491f?w=1920&auto=format&fit=crop&q=80',
-      title: 'Rwenzori Mountains Trek',
-      subtitle: 'Conquer the legendary Mountains of the Moon',
-      cta: 'Mountain Expeditions'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1629248457649-b082812aea6c?w=1920&auto=format&fit=crop&q=80',
-      title: 'Jinja Adventure Capital',
-      subtitle: 'White-water rafting at the Source of the Nile',
-      cta: 'Adventure Tours'
-    },
-    {
-    image: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=1920&q=80&auto=format&fit=crop',
-    title: 'Tree-Climbing Lions',
-    subtitle: 'Witness the unique behavior of the Ishasha kings',
-    cta: 'Queen Elizabeth Park'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1667817418453-3489bb60ce9b?w=1920&auto=format&fit=crop&q=80',
-    title: 'Kidepo Valley Wilderness',
-    subtitle: 'Discover Africa\'s most hidden and rugged gem',
-    cta: 'Explore Kidepo'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1660675133902-acd1b057f75d?w=1920&auto=format&fit=crop&q=80',
-    title: 'Cultural Heritage',
-    subtitle: 'Meet the vibrant communities and traditions of Uganda',
-    cta: 'Cultural Tours'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1661885869635-eeb583e3378f?w=1920&auto=format&fit=crop&q=80',
-    title: 'The Source of the Nile',
-    subtitle: 'Stand at the beginning of the world\'s longest river',
-    cta: 'Visit Jinja'
-  },
-  {
-    image: 'https://plus.unsplash.com/premium_photo-1722686568915-b40ee8a6c072?w=1920&auto=format&fit=crop&q=80',
-    title: 'Birding Paradise',
-    subtitle: 'Home to over 1,000 species, including the Shoebill Stork',
-    cta: 'Birding Safaris'
-  }
+const slides = [
+  { image: '/images/IMG_20230828_131906.jpg', region: 'East Asia', location: 'Beijing, China', headline: 'Walking the Great\nWall of China', body: 'An ancient wonder stretching 21,000 km across misty mountains — now yours to conquer.', cta: 'Plan China Trip', ctaLink: '/packages', accent: '#c9a96e', tag: 'Cultural' },
+  { image: 'https://images.unsplash.com/photo-1509897739002-791fa79aac9b?q=80&w=1920&auto=format&fit=crop', region: 'East Africa', location: 'Bwindi, Uganda', headline: 'Face-to-Face\nwith Gorillas', body: "Deep in ancient rainforest, 700 mountain gorillas wait. Half the world's population — right here.", cta: 'Book the Trek', ctaLink: '/booking', accent: '#7ab87a', tag: 'Wildlife' },
+  { image: '/images/Snapchat-1906972103.jpg', region: 'Middle East', location: 'Dubai, UAE', headline: 'Desert Nights\nand Marina Lights', body: 'From golden dunes at sunset to the glittering skyline — Dubai never stops surprising.', cta: 'Explore Dubai', ctaLink: '/packages', accent: '#c9a96e', tag: 'Luxury' },
+  { image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920&auto=format&fit=crop&q=80', region: 'East Africa', location: 'Serengeti, Tanzania', headline: 'The Great\nMigration', body: '1.5 million wildebeest, 350,000 gazelle — the greatest wildlife spectacle on Earth.', cta: 'Safari Packages', ctaLink: '/packages', accent: '#d4855a', tag: 'Safari' },
+  { image: '/images/murchison-falls-view.jpg', region: 'East Africa', location: 'Murchison Falls, Uganda', headline: 'Where the Nile\nThunders', body: "The world's most powerful waterfall — the entire Nile forced through a 7-metre gap.", cta: 'See Murchison', ctaLink: '/destinations', accent: '#5b9bd5', tag: 'Nature' },
+  { image: '/images/Snapchat-740087849.jpg', region: 'Southeast Asia', location: 'Phuket, Thailand', headline: 'Thai Islands\nEscape', body: 'Limestone karsts, crystal seas, longtail boats to hidden coves. Time stops here.', cta: 'Thailand Tours', ctaLink: '/packages', accent: '#4ab3c8', tag: 'Beach' },
+  { image: '/images/mountain-climbing.avif', region: 'East Africa', location: 'Rwenzori, Uganda', headline: 'Mountains\nof the Moon', body: "Africa's last equatorial glaciers — a legendary high-altitude adventure like no other.", cta: 'Mountain Trek', ctaLink: '/packages', accent: '#9b7ec8', tag: 'Adventure' },
+  { image: '/images/Snapchat-783147270.jpg', region: 'Europe & Asia', location: 'Istanbul, Turkey', headline: 'Where East\nMeets West', body: 'Two continents, one city. Byzantine domes, spice-scented bazaars, Bosphorus sunsets.', cta: 'Istanbul Packages', ctaLink: '/packages', accent: '#c97a7a', tag: 'Cultural' },
+  { image: '/images/lake-bunyonyi.avif', region: 'East Africa', location: 'Lake Bunyonyi, Uganda', headline: "Africa's Most\nBeautiful Lake", body: '29 islands, terraced emerald hills, mirror-calm water. The perfect place to exhale.', cta: 'Lake Retreats', ctaLink: '/destinations', accent: '#6aab8a', tag: 'Nature' },
 ];
 
-  const nextSlide = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-      setTimeout(() => setIsAnimating(false), 600);
-    }
-  };
+const DURATION = 6500;
 
-  const prevSlide = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-      setTimeout(() => setIsAnimating(false), 600);
-    }
-  };
+const Hero = () => {
+  const [current, setCurrent] = useState(0);
+  const [prevIdx, setPrevIdx] = useState(null);
+  const [dir, setDir] = useState(1);
+  const [transitioning, setTransitioning] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const timerRef = useRef(null);
+  const progressRef = useRef(null);
+  const startRef = useRef(Date.now());
+
+  const go = useCallback((nextIdx) => {
+    if (transitioning || nextIdx === current) return;
+    setTransitioning(true);
+    setPrevIdx(current);
+    setDir(nextIdx > current ? 1 : -1);
+    setCurrent(nextIdx);
+    setProgress(0);
+    startRef.current = Date.now();
+    setTimeout(() => { setPrevIdx(null); setTransitioning(false); }, 850);
+  }, [current, transitioning]);
+
+  const next = useCallback(() => go((current + 1) % slides.length), [go, current]);
+  const back = useCallback(() => go((current - 1 + slides.length) % slides.length), [go, current]);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 6000);
-    return () => clearInterval(interval);
-  }, [currentSlide, isAnimating]);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(next, DURATION);
+    return () => clearInterval(timerRef.current);
+  }, [next]);
 
-  const goToSlide = (index) => {
-    if (!isAnimating && index !== currentSlide) {
-      setIsAnimating(true);
-      setCurrentSlide(index);
-      setTimeout(() => setIsAnimating(false), 600);
-    }
-  };
+  useEffect(() => {
+    clearInterval(progressRef.current);
+    startRef.current = Date.now();
+    setProgress(0);
+    progressRef.current = setInterval(() => {
+      const elapsed = Date.now() - startRef.current;
+      setProgress(Math.min((elapsed / DURATION) * 100, 100));
+    }, 40);
+    return () => clearInterval(progressRef.current);
+  }, [current]);
+
+  const slide = slides[current];
+  const prevSlide = prevIdx !== null ? slides[prevIdx] : null;
+
+  const overlayGrad = 'linear-gradient(110deg, rgba(10,10,15,0.88) 0%, rgba(10,10,15,0.52) 55%, rgba(10,10,15,0.26) 100%)';
+  const bottomGrad  = 'linear-gradient(to top, rgba(10,10,15,0.85) 0%, rgba(10,10,15,0.12) 65%, transparent 100%)';
 
   return (
-    <section id="home" className="relative w-full">
-      {/* Hero Slider - Optimized height */}
-      <div className="relative h-screen bg-slate-900">
-        {/* Slides */}
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
-          >
-            {/* Background Image - Optimized loading */}
-            <div className="absolute inset-0 overflow-hidden">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent"></div>
-            </div>
+    <section style={{ position:'relative', width:'100%', height:'100svh', minHeight:600, background:'#0a0a0f', overflow:'hidden' }}>
+      <style>{`
+        @keyframes kbIn    { from { transform:scale(1.07); } to { transform:scale(1); } }
+        @keyframes fadeUp  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes growW   { from { width:0; opacity:0; } to { opacity:1; } }
+        @keyframes sInR    { from { transform:translateX(5%);  opacity:0; } to { transform:translateX(0); opacity:1; } }
+        @keyframes sInL    { from { transform:translateX(-5%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+        @keyframes sOutL   { from { transform:translateX(0); opacity:1; } to { transform:translateX(-5%); opacity:0; } }
+        @keyframes sOutR   { from { transform:translateX(0); opacity:1; } to { transform:translateX(5%);  opacity:0; } }
+      `}</style>
 
-            {/* Content - Optimized animations */}
-            {index === currentSlide && (
-              <div className="relative z-20 h-full flex items-center justify-center px-4 sm:px-6 lg:px-12">
-                <div className="max-w-7xl mx-auto w-full">
-                  <div className="max-w-4xl mx-auto text-center">
-                    {/* Slide Title - Responsive text sizes */}
-                    <h2 
-                      className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-4 sm:mb-6 leading-tight fade-in"
-                      style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800, textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
-                    >
-                      {slide.title}
-                    </h2>
+      {/* Outgoing */}
+      {prevSlide && (
+        <div style={{ position:'absolute', inset:0, zIndex:1, animation:`${dir>0?'sOutL':'sOutR'} 0.85s cubic-bezier(0.76,0,0.24,1) forwards` }}>
+          <img src={prevSlide.image} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }} />
+          <div style={{ position:'absolute', inset:0, background:overlayGrad }} />
+          <div style={{ position:'absolute', inset:0, background:bottomGrad }} />
+        </div>
+      )}
 
-                    {/* Decorative line */}
-                    <div className="flex justify-center mb-5 sm:mb-8 fade-in-delay-1">
-                      <div className="h-1 w-20 sm:w-24 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
-                    </div>
+      {/* Incoming */}
+      <div key={current} style={{ position:'absolute', inset:0, zIndex:2, animation:`${dir>0?'sInR':'sInL'} 0.85s cubic-bezier(0.76,0,0.24,1) forwards` }}>
+        <img src={slide.image} alt={slide.location} loading="eager" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', animation:'kbIn 8s ease-out forwards' }} />
+        <div style={{ position:'absolute', inset:0, background:overlayGrad }} />
+        <div style={{ position:'absolute', inset:0, background:bottomGrad }} />
+        <div style={{ position:'absolute', inset:0, opacity:0.03, backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
+      </div>
 
-                    {/* Subtitle - Responsive text */}
-                    <p 
-                      className="text-white/90 text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-10 font-light leading-relaxed fade-in-delay-1 px-4"
-                      style={{ fontFamily: "'Crimson Text', serif" }}
-                    >
-                      {slide.subtitle}
-                    </p>
+      {/* Content */}
+      <div style={{ position:'relative', zIndex:10, height:'100%', display:'flex', flexDirection:'column', justifyContent:'space-between', maxWidth:1280, margin:'0 auto', padding:'0 clamp(24px, 5vw, 64px)', paddingTop:110 }}>
 
-                    {/* CTA Buttons - Stack on mobile */}
-                    <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 fade-in-delay-2 px-4">
-                      <Link 
-                        to="/destinations"
-                        className="px-6 sm:px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white text-sm sm:text-base font-semibold tracking-wide rounded-sm shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center"
-                        style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      >
-                        {slide.cta}
-                      </Link>
-                      <Link 
-                        to="/packages"
-                        className="px-6 sm:px-8 py-3 bg-transparent border-2 border-white text-white text-sm sm:text-base font-semibold tracking-wide hover:bg-white hover:text-amber-900 transition-all duration-300 rounded-sm w-full sm:w-auto text-center"
-                        style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      >
-                        Learn More
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Navigation Arrows - Smaller on mobile */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-
-        {/* Navigation Dots - Optimized */}
-        <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
-                index === currentSlide 
-                  ? 'w-8 sm:w-10 bg-amber-400' 
-                  : 'w-1 sm:w-1.5 bg-white/40 hover:bg-white/70'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+        {/* Top meta */}
+        <div key={`m${current}`} style={{ display:'flex', alignItems:'center', gap:12, animation:'fadeUp 0.5s ease 0.1s both' }}>
+          <Compass style={{ width:13, height:13, color:slide.accent, flexShrink:0 }} />
+          <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(255,255,255,0.4)' }}>{slide.region}</span>
+          <span style={{ display:'inline-block', width:1, height:12, background:'rgba(255,255,255,0.14)' }} />
+          <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(255,255,255,0.26)' }}>
+            {String(current+1).padStart(2,'0')} / {String(slides.length).padStart(2,'0')}
+          </span>
         </div>
 
-        {/* Scroll Indicator - Hide on mobile */}
-        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 hidden md:block">
-          <div className="flex flex-col items-center gap-2 text-white/70">
-            <span className="text-xs tracking-widest uppercase" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              Scroll
-            </span>
-            <div className="w-px h-10 bg-gradient-to-b from-white/70 to-transparent animate-pulse"></div>
+        {/* Main text block */}
+        <div style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'center', maxWidth:680 }}>
+
+          {/* Tag */}
+          <div key={`t${current}`} style={{ display:'inline-flex', alignItems:'center', gap:8, alignSelf:'flex-start', padding:'5px 14px', borderRadius:999, border:`1px solid ${slide.accent}40`, background:`${slide.accent}14`, marginBottom:20, animation:'fadeUp 0.5s ease 0.18s both' }}>
+            <span style={{ width:5, height:5, borderRadius:'50%', background:slide.accent }} />
+            <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:10, fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase', color:slide.accent }}>{slide.tag}</span>
+          </div>
+
+          {/* Headline */}
+          <h1 key={`h${current}`} style={{ fontFamily:"'Playfair Display',serif", fontWeight:800, fontSize:'clamp(46px,7.5vw,92px)', lineHeight:1.0, letterSpacing:'-0.025em', color:'#fff', whiteSpace:'pre-line', textShadow:'0 6px 36px rgba(0,0,0,0.45)', animation:'fadeUp 0.6s ease 0.22s both', margin:'0 0 0.35em' }}>
+            {slide.headline}
+          </h1>
+
+          {/* Rule */}
+          <div key={`r${current}`} style={{ width:52, height:2, background:`linear-gradient(90deg, ${slide.accent}, transparent)`, marginBottom:'1.3em', animation:'growW 0.5s ease 0.35s both' }} />
+
+          {/* Body */}
+          <p key={`b${current}`} style={{ fontFamily:"'Crimson Text',serif", fontSize:'clamp(16px,1.75vw,21px)', color:'rgba(255,255,255,0.68)', lineHeight:1.76, maxWidth:500, animation:'fadeUp 0.6s ease 0.3s both', margin:'0 0 2em' }}>
+            {slide.body}
+          </p>
+
+          {/* CTAs */}
+          <div key={`c${current}`} style={{ display:'flex', gap:12, flexWrap:'wrap', animation:'fadeUp 0.6s ease 0.38s both' }}>
+            <Link to={slide.ctaLink} style={{ display:'inline-flex', alignItems:'center', gap:7, padding:'13px 26px', borderRadius:4, background:`linear-gradient(135deg, ${slide.accent}, ${slide.accent}bb)`, color:'#0a0a0f', fontFamily:"'Montserrat',sans-serif", fontWeight:700, fontSize:12, letterSpacing:'0.08em', textTransform:'uppercase', boxShadow:`0 8px 26px ${slide.accent}40`, textDecoration:'none', transition:'transform 0.25s, box-shadow 0.25s' }}
+              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow=`0 14px 36px ${slide.accent}60`; }}
+              onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow=`0 8px 26px ${slide.accent}40`; }}>
+              {slide.cta} <ArrowUpRight style={{ width:13, height:13 }} />
+            </Link>
+            <Link to="/destinations" style={{ display:'inline-flex', alignItems:'center', padding:'13px 26px', borderRadius:4, border:'1px solid rgba(255,255,255,0.18)', background:'rgba(255,255,255,0.06)', color:'rgba(255,255,255,0.82)', fontFamily:"'Montserrat',sans-serif", fontWeight:600, fontSize:12, letterSpacing:'0.08em', textTransform:'uppercase', backdropFilter:'blur(10px)', textDecoration:'none', transition:'background 0.25s, border-color 0.25s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.3)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.18)'; }}>
+              All Destinations
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom strip */}
+        <div>
+          <div style={{ height:1, background:'rgba(255,255,255,0.07)', marginBottom:18 }}>
+            <div style={{ height:'100%', width:`${progress}%`, background:`linear-gradient(90deg, ${slide.accent}, ${slide.accent}88)`, transition:'width 0.04s linear', borderRadius:1 }} />
+          </div>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingBottom:28 }}>
+            {/* Location */}
+            <div style={{ display:'flex', alignItems:'center', gap:7 }}>
+              <MapPin style={{ width:12, height:12, color:slide.accent, flexShrink:0 }} />
+              <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(255,255,255,0.45)' }}>{slide.location}</span>
+            </div>
+            {/* Dots */}
+            <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+              {slides.map((_,i) => (
+                <button key={i} onClick={() => go(i)} aria-label={`Slide ${i+1}`} style={{ padding:0, border:'none', cursor:'pointer', borderRadius:2, height:2, width:i===current?28:8, background:i===current?slide.accent:'rgba(255,255,255,0.22)', transition:'all 0.35s ease' }} />
+              ))}
+            </div>
+            {/* Arrows */}
+            <div style={{ display:'flex', gap:8 }}>
+              {[[back,ChevronLeft,'Prev'],[next,ChevronRight,'Next']].map(([fn,Icon,label]) => (
+                <button key={label} onClick={fn} aria-label={label} style={{ width:40, height:40, borderRadius:3, background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)', backdropFilter:'blur(8px)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', transition:'background 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.14)'}
+                  onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,0.07)'}>
+                  <Icon style={{ width:17, height:17, color:'rgba(255,255,255,0.8)' }} />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Thumbnail strip — XL only */}
+      <div style={{ position:'absolute', right:16, top:'50%', transform:'translateY(-50%)', zIndex:20, display:'none', flexDirection:'column', gap:7 }} className="xl-thumbs">
+        {slides.map((s,i) => (
+          <button key={i} onClick={() => go(i)} aria-label={s.location} style={{ width:66, height:44, borderRadius:3, overflow:'hidden', padding:0, border:`2px solid ${i===current?slide.accent:'transparent'}`, opacity:i===current?1:0.38, transition:'all 0.3s ease', cursor:'pointer' }}
+            onMouseEnter={e => { if(i!==current) e.currentTarget.style.opacity='0.72'; }}
+            onMouseLeave={e => { if(i!==current) e.currentTarget.style.opacity='0.38'; }}>
+            <img src={s.image} alt={s.location} style={{ width:'100%', height:'100%', objectFit:'cover' }} loading="lazy" />
+          </button>
+        ))}
+      </div>
+      <style>{`@media(min-width:1280px){.xl-thumbs{display:flex!important}}`}</style>
     </section>
   );
 };
