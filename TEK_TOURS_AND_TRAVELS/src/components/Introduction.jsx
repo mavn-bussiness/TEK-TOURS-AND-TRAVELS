@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowUpRight, Leaf, Compass, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Introduction = () => {
   return (
