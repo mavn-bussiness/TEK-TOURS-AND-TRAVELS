@@ -93,9 +93,9 @@ const Footer = () => {
                 ‎+256 743 161 414
               </a>
 
-              <a href="mailto:info@tektours.com" className="flex items-center gap-3 hover:text-amber-400">
+              <a href="mailto:info@tektoursandtravels.com" className="flex items-center gap-3 hover:text-amber-400">
                 <Mail className="w-4 h-4" />
-                info@tektours.com
+                info@tektoursandtrvels.com
               </a>
 
               <div className="flex items-start gap-3">

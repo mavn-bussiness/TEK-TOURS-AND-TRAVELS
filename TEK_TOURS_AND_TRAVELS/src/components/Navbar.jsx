@@ -35,7 +35,7 @@ const Navbar = () => {
     { name: 'Destinations', href: '/destinations', type: 'link' },
     { name: 'Packages', href: '/packages', type: 'link' },
     { name: 'Gallery', href: '/gallery', type: 'link' },
-    { name: 'Contact', href: '#footer', type: 'hash' }
+    { name: 'Contact', href: '/booking', type: 'link' }
   ];
 
   const scrollToSection = (hash) => {
