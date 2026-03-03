@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, MapPin, Check, Phone, User, Calendar, Users, MessageSquare, ChevronDown } from "lucide-react";
 
-const CONTACT_EMAIL = "info@tektours.com";
+const CONTACT_EMAIL = "info@tektoursandtravels.com";
 
 const destinations = [
   "Bwindi – Gorilla Trekking",
@@ -184,7 +184,7 @@ export default function Booking() {
           {/* Contact info */}
           <div className="space-y-4">
             {[
-              { icon: Mail, label: 'Email Us', value: 'info@tektours.com' },
+              { icon: Mail, label: 'Email Us', value: 'info@tektoursandtravels.com' },
               { icon: Phone, label: 'Call / WhatsApp', value: '+256 743 161 414' },
               { icon: MapPin, label: 'Based In', value: 'Plot 330 Block 10 House 15, Kiyindi Lane Nakulabye Trading Center, Bukesa Mengo' },
             ].map((item, i) => {

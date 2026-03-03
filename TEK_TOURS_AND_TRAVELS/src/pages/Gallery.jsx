@@ -142,7 +142,7 @@ const Gallery = () => {
     {
       id: 21,
       url: '/images/IMG-20250124-WA0027.jpeg',
-      title: 'Port of Entebbe, Lake Victoria',
+      title: 'Dar es Salaam, Tanzania',
       size: 'tall',
     },
     {
@@ -206,7 +206,7 @@ const Gallery = () => {
     {
       id: 31,
       url: '/images/Snapchat-740087849.jpg',
-      title: 'Phuket Kart, Thailand',
+      title: 'Dubai Yachts',
       size: 'wide',
     },
     {
@@ -232,7 +232,7 @@ const Gallery = () => {
     {
       id: 35,
       url: '/images/Snapchat-1364101570.jpg',
-      title: 'Uganda National Park Map',
+      title: 'Maya Bay, Thailand',
       size: 'small',
     },
     {

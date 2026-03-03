@@ -53,9 +53,9 @@ const TopBanner = () => {
           <a href="#" className="hover:scale-110 transition-transform duration-200" aria-label="Twitter">
             <Twitter className="w-3.5 h-3.5" />
           </a>
-          <a href="mailto:info@tektours.com" className="flex items-center gap-2 ml-2 opacity-90 hover:opacity-100 transition-opacity">
+          <a href="mailto:info@tektoursandtravels.com" className="flex items-center gap-2 ml-2 opacity-90 hover:opacity-100 transition-opacity">
             <Mail className="w-3.5 h-3.5" />
-            <span className="text-xs font-medium">info@tektours.com</span>
+            <span className="text-xs font-medium">info@tektoursandtravels.com</span>
           </a>
           <a href="tel:‎+256743161414" className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
             <Phone className="w-3.5 h-3.5" />
